@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="paperUpLoad">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>论文上传</title>
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.css" type="text/css"/>
+    <link type="favicon" rel="shortcut icon" href="../../images/favicon.ico"/>
+    <script src="../../script/angular-1.5.8/angular.js"></script>
+    <style>
+        header{
+            margin-top: 20px;
+            position: relative;
+        }
+        header>div.container>div.row>div.col-sm-12>a{
+            position: absolute;
+            top: 10px;
+            left: 40px;
+            border-radius: 0;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+        form{
+            padding: 0 15px;
+        }
+        input#paper_file{
+            opacity: 0;
+            pointer-events: none;
+        }
+        form input#paper_name{
+            border-radius: 0;
+            font-size: 15px;
+        }
+        form input#paper_name:focus{
+            box-shadow: none;
+            border-color: black;
+        }
+        form textarea#abstract{
+            border-radius: 0;
+            font-size: 15px;
+        }
+        form textarea#abstract:focus{
+            box-shadow: none;
+            border-color: black;
+        }
+        form>div.form-group>div.col-sm-6{
+            padding: 0;
+        }
+        form>div.form-group>div.col-sm-6>a{
+            border-radius: 0;
+            text-decoration: none;
+        }
+        form>div.form-group>div.col-sm-6>a:focus{
+            box-shadow: none;
+            color: #000000;
+            border-color: #000000;
+        }
+        form>div.form-group>div.col-sm-6>a:hover{
+            color: #000000;
+        }
+        form>div.form-group>div.col-sm-1>button{
+            height: 34px;
+            line-height: 17px;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body ng-controller="bodyController">
+<header id="head_image" class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="../../images/4.png" ng-src="{{conferece.imageUrl}}" alt="" class="img-responsive">
+                <a href="/account/myjoin" class="btn"><span class="glyphicon glyphicon-chevron-left"></span>返回我的会议</a>
+            </div>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="" class="form-horizontal" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="paper_name" class="control-label"></label>
+                        <div>
+                            <h4>论文题目</h4>
+                            <input name="" id="paper_name" class="form-control  col-sm-10" ng-model="paperName"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="abstract" class="control-label"></label>
+                        <div>
+                            <h4>填写摘要</h4>
+                            <textarea name="abstract" id="abstract" class="form-control  col-sm-10" ng-model="abstract"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <a href="javascript:void(0);" type="text" class="form-control text-center" onclick="document.getElementById('paper_file').click();">
+                                <span class="glyphicon glyphicon-open"></span>
+                                <span>上传论文</span>
+                                <input type="file" class="form-control" id="paper_file" ng-model="file">
+                            </a>
+                        </div>
+                        <div class="col-sm-offset-5 col-sm-1">
+                            <button type="button" class="btn btn-lg" ng-click="submitEvent();">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="../../script/jquery-3.3.1.js"></script>
+<script src="../../script/bootstrap.js"></script>
+<script>
+let paperUpLoad = angular.module('paperUpLoad', []);
+paperUpLoad.config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
+paperUpLoad.controller('bodyController', function ($scope, $http, $location, $window) {
+    $scope.userEmail = sessionStorage.getItem('userEmail');
+    $scope.conferenceName = $location.search().conferencename;
+    $http({
+        method: 'GET',
+        url: '/conference/getConference',
+        params: {
+            conferenceName: $scope.conferenceName
+        }
+    }).then(function success(response) {
+        $scope.conferece = response.data.data;
+    }, function error() {
+        alert('请稍后再试');
+    });
+    $scope.checkFile = function() {
+        if($scope.paperName === '' || $scope.paperName === undefined){
+            alert('论文名不能为空');
+            return false;
+        }else if($scope.abstract === '' || $scope.abstract === undefined){
+            alert('摘要不能为空');
+            return false;
+        } else if($('#paper_file')[0].files[0] === undefined || $('#paper_file')[0].files[0] === null){
+            alert('请上传文件');
+            return false;
+        }
+        let fileName = document.getElementById('paper_file').value;
+        let fileType = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+        if(fileType !== '.doc' && fileType !== '.docx'){
+            alert('请上传doc/docx格式的文档');
+            return false;
+        }
+        return true;
+    };
+    $scope.submitEvent = function () {
+        if($scope.checkFile()){
+            let formData = new FormData();
+            formData.append('userEmail', $scope.userEmail);
+            formData.append('conferenceName', $scope.conferenceName);
+            formData.append('paperFile', $('#paper_file')[0].files[0]);
+            formData.append('paperName', $scope.paperName);
+            formData.append('myAbstract', $scope.abstract);
+            $http({
+                method: 'POST',
+                url: '/conference/insertPaper',
+                data: formData,
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined},
+                transformResponse: function (data) {
+                    return data;
+                }
+            }).then(function success(response) {
+                let resultSet = JSON.parse(response.data);
+                if(resultSet.code === 200){
+                    alert('提交成功');
+                    $window.location.href = '/account/myjoin';
+                }
+            }, function error() {
+                alert('请稍后再试');
+            })
+        }
+    }
+});
+</script>
+</body>
+</html>

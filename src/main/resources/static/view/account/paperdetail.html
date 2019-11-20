@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="paperDetailApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>论文详情</title>
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.css" type="text/css"/>
+    <link type="favicon" rel="shortcut icon" href="../../images/favicon.ico"/>
+    <script src="../../script/angular-1.5.8/angular.js"></script>
+</head>
+<style>
+    a{
+        color: #777777;
+    }
+    a:hover{
+        color: #000000;
+        text-decoration: none;
+    }
+    div.divider{
+        height: 20px;
+    }
+</style>
+<body ng-controller="bodyController">
+<section class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="text-center" ng-bind="paper.paperName"></h2>
+            <div class="divider"></div>
+            <h4>摘要：</h4>
+            <article ng-bind="paper.paperAbstract"></article>
+            <div class="divider"></div>
+            <h4>所属会议</h4>
+            <span ng-bind="paper.conferenceName"></span>
+            <div class="divider"></div>
+            <h4>作者</h4>
+            <span ng-bind="paper.userEmail"></span>
+            <div class="divider"></div>
+            <h4>审核专家</h4>
+            <span ng-bind="paper.checkUser"></span>
+            <div class="divider"></div>
+            <h4>审核意见</h4>
+            <div>
+                <p ng-bind="paper.checkResult"></p>
+            </div>
+            <div class="divider"></div>
+            <div>
+                <a href="" ng-href="{{'/conference/paperDown?paperName=' + paper.paperName}}" target="_blank"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;点击下载</a>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="../../script/jquery-3.3.1.js"></script>
+<script src="../../script/bootstrap.js"></script>
+<script>
+    let paperDetailApp = angular.module('paperDetailApp', []);
+    paperDetailApp.config(['$locationProvider', function ($locationProvider) {
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
+    }]);
+    paperDetailApp.controller('bodyController', function ($scope, $location, $http) {
+        $scope.paperName = $location.search().papername;
+        $http({
+            method: 'GET',
+            url: '/conference/getPaperByPaperName',
+            params: {
+                paperName: $scope.paperName
+            }
+        }).then(function success(response) {
+            $scope.paper = response.data.data;
+        }, function error() {
+            alert('请稍后再试');
+        });
+    });
+</script>
+</body>
+</html>

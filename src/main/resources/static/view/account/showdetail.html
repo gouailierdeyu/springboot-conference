@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="">
+<head>
+    <meta charset="UTF-8">
+    <title>报名详情</title>
+    <link type="favicon" rel="shortcut icon" href="../../images/favicon.ico"/>
+    <style>
+        h3{
+            text-align: center;
+        }
+        div .show_div{
+            border: 1px solid #777777;
+            font-size: 20px;
+            margin-bottom: 10px;
+            padding: 0 30px;
+        }
+    </style>
+</head>
+<body ng-controller="">
+<h3>报名单详情</h3>
+<div ng-repeat="report in reportDetailList" style="" class="show_div">
+    <p ng-repeat="value in report.inputValue">{{reportSet[$index].inputKey +' ' + ':' + value}}</p>
+</div>
+</body>
+</html>

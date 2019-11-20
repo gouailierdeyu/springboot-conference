@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="conferenceApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>活动详情</title>
+    <link rel="stylesheet" type="text/css" href="../../../../static/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="../../../../static/modules/conference/css/conference.css"/>
+    <link type="favicon" rel="shortcut icon" href="../../../../static/images/favicon.ico"/>
+    <script src="../../../../static/script/angular-1.5.8/angular.js"></script>
+    <script src="../../../../static/script/angular-1.5.8/angular-sanitize.js"></script>
+</head>
+<body ng-controller="bodyController">
+<header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-js-navbar-scrollspy">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="javascript:void(0);" ng-href="{{owner.web}}" class="navbar-brand" ng-bind="owner.name" target="_blank"></a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-js-navbar-scrollspy">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#activity_image">活动内容</a></li>
+                    <li><a href="#activity_ticket">活动门票</a></li>
+                    <li><a href="#activity_map">活动地点</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<section id="activity_image" style="">
+    <img src="" ng-src="{{conference.imageUrl}}" alt="" class="center-block img-responsive" height="600" width="1920">
+</section>
+<section id="activity_context" class="text-center">
+    <div class="container">
+        <div class="row">
+            <h3 class="text-center">活动信息</h3>
+            <div id="detail_panel"></div>
+        </div>
+    </div>
+</section>
+<section id="activity_ticket">
+    <div class="container">
+        <div class="row">
+            <h3 class="text-center">活动门票</h3>
+            <table class="table table-responsive text-center" style="display: table;">
+                <thead>
+                <tr>
+                    <th class="text-center">票名</th>
+                    <th class="text-center">价格</th>
+                    <th class="text-center">截至时间</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="ticket in ticketList">
+                    <td ng-bind="ticket.name"></td>
+                    <td ng-bind="ticket.price"></td>
+                    <td ng-bind="conference.startTime"></td>
+                    <td>
+                        <button type="submit" class="btn" ng-click="minus($index);" ng-disabled="ticketAble"><span class="glyphicon glyphicon-minus"></span></button>
+                        <span ng-bind="ticketSum[$index]"></span>
+                        <button type="submit" class="btn" ng-click="plus($index);" ng-disabled="ticketAble"><span class="glyphicon glyphicon-plus"></span></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<section id="ticket_submit">
+    <div class="container">
+        <div class="row">
+            <span class="col-sm-1 col-sm-offset-1">总价：</span>
+            <span class="col-sm-2" ng-bind="sumPrice"></span>
+            <button class="col-sm-2 col-sm-offset-6 btn btn-group-lg" ng-click="payTicketEvent();">我要报名</button>
+        </div>
+    </div>
+</section>
+<section id="activity_map">
+    <div class="container-fluid">
+        <div class="row" style="">
+            <div class="col-sm-12 text-center">
+                <h3>位置信息</h3>
+            </div>
+            <div class="col-sm-12" id="godMap"></div>
+            <div class="text-center" id="activity_info">
+                <p id="time" class="">{{'时间：' + conference.startTime + ' ~ ' + conference.endTime}}</p>
+                <p id="address" class="" ng-bind="address.district + ' ' + address.address"></p>
+        </div>
+        </div>
+    </div>
+</section>
+<footer id="page_info">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                <div>本活动由&nbsp;<a href="#">会议系统</a>&nbsp;提供技术支持</div>
+                <div>
+                    <a href="">会议系统</a>
+                    <span>-</span>
+                    <a href="">关于我们</a>
+                    <span>-</span>
+                    <a href="">友情链接</a>
+                    <span>-</span>
+                    <a href="">帮助</a>
+                </div>
+            </div>
+            <div class="col-sm-6 text-center">
+                <p>重庆大学计算机学院 | 渝ICP备15059127号 | 渝ICP证B2-20160175号</p>
+                <p>Copyright©2015 iconference.com</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../../../../static/script/jquery-3.3.1.js"></script>
+<script src="../../../../static/script/bootstrap.js"></script>
+<script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.14&key=15db19785a2e16f12f17f9ab6d1edc25">
+</script>
+<script src="../../../../static/modules/conference/script/conference.js"></script>
+<script>
+
+</script>
+</body>
+</html>

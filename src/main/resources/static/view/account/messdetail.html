@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>消息详情</title>
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.css" type="text/css"/>
+    <link type="favicon" rel="shortcut icon" href="../../images/favicon.ico"/>
+    <script src="../../script/angular-1.5.8/angular.js"></script>
+</head>
+<style>
+    a{
+        color: #777777;
+    }
+    a:hover{
+        color: #000000;
+        text-decoration: none;
+    }
+    div.divider{
+        height: 20px;
+    }
+    p{
+        font-size: 15px;
+    }
+</style>
+<body ng-controller="con">
+<section class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="text-center">站内信息</h2>
+            <div class="divider"></div>
+            <p><span ng-bind="name"></span>邀请您审议论文：<a href="" ng-href="{{'/account/paperreview?papername=' + paperName}}" target="_blank">去审核</a></p>
+        </div>
+    </div>
+</section>
+<script src="../../script/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="../../script/bootstrap.js" type="text/javascript"></script>
+<script>
+    let app = angular.module('app', []);
+    app.config(['$locationProvider', function ($locationProvider) {
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
+    }]);
+    app.controller('con', function ($scope, $location) {
+        $scope.paperName = $location.search().papername;
+        $scope.name = $location.search().name;
+        console.log($scope.paperName);
+        console.log($scope.name);
+    });
+</script>
+</body>
+</html>

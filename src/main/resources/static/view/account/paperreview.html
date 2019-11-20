@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="paperReviewApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>论文审核</title>
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.css" type="text/css"/>
+    <link type="favicon" rel="shortcut icon" href="../../images/favicon.ico"/>
+    <script src="../../script/angular-1.5.8/angular.js"></script>
+</head>
+<style>
+    a{
+        color: #777777;
+    }
+    a:hover{
+        color: #000000;
+        text-decoration: none;
+    }
+    div.divider{
+        height: 20px;
+    }
+    textarea#audit_opinion{
+        border-radius: 0;
+        font-size: 15px;
+        height: 100px;
+    }
+    textarea#audit_opinion:focus{
+        box-shadow: none;
+        border-color: black;
+    }
+    button.btn{
+        border-radius: 0;
+        height: 40px;
+        line-height: 20px;
+    }
+    form{
+        padding: 0 15px;
+    }
+</style>
+<body ng-controller="bodyController">
+<section class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="text-center" ng-bind="paper.paperName">论文名称</h2>
+            <div class="divider"></div>
+            <h4>摘要：</h4>
+            <article ng-bind="paper.paperAbstract">
+                农业发展问题一直是我国经济工作的核心,随着农业结构的优化升级,我国农产品的产量不断提高,农业管理服务水平也不断进步。本文分析了农业推广中种子管理服务现状,提出了提高种子管理服务工作水平的对策,以期为促进种子的生产和推广朝着专业化方向发展提供参考。
+                关键词：农业推广; 种子管理服务; 现状; 对策;
+            </article>
+            <div class="divider"></div>
+            <h4>所属会议</h4>
+            <span ng-bind="paper.conferenceName">2019界重庆大学会议</span>
+            <div class="divider"></div>
+            <h4>作者</h4>
+            <span ng-bind="paper.userEmail">曹俊锋</span>
+            <div class="divider"></div>
+            <h4>审核专家</h4>
+            <span ng-bind="paper.checkUser">X教授、Y教授、Z教授</span>
+            <div class="divider"></div>
+            <h4>审核意见</h4>
+            <div>
+                <p ng-bind="paper.checkResult">X教授：这里是审核意见</p>
+            </div>
+            <div class="divider"></div>
+            <div>
+                <a href="javascript:void(0);" ng-href="{{'/conference/paperDown?paperName=' + paper.paperName}}" target="_blank"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;点击下载</a>
+            </div>
+            <div class="divider"></div>
+            <form action="" class="form-horizontal" style="">
+                <div class="form-group">
+                    <label for="audit_opinion" class="control-label"></label>
+                    <div>
+                        <h4>填写审核意见</h4>
+                        <textarea name="audit_opinion" id="audit_opinion" class="form-control  col-sm-10" ng-model="checkResult"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-11">
+                        <label for="true">通&nbsp;&nbsp;&nbsp;&nbsp;过</label>
+                        <input type="radio" name="is_pass" id="true" value="1" ng-model="isPass">
+                        <br>
+                        <label for="false">不通过</label>
+                        <input type="radio" name="is_pass" id="false" value="-1" ng-model="isPass">
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-lg" type="button" ng-click="submitEvent();">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<script src="../../script/jquery-3.3.1.js"></script>
+<script src="../../script/bootstrap.js"></script>
+<script>
+    let paperReviewApp = angular.module('paperReviewApp', []);
+    paperReviewApp.config(['$locationProvider', function ($locationProvider) {
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
+    }]);
+    paperReviewApp.controller('bodyController', function ($scope, $location, $http, $window) {
+        $scope.paperName = $location.search().papername;
+        $http({
+            method: 'GET',
+            url: '/conference/getPaperByPaperName',
+            params: {
+                paperName: $scope.paperName
+            }
+        }).then(function success(response) {
+            $scope.paper = response.data.data;
+        }, function error() {
+            alert('请稍后再试');
+        });
+        $scope.submitEvent = function () {
+            $http({
+                method: 'GET',
+                url: '/conference/updatePaperCheckResult',
+                params: {
+                    paperName: $scope.paperName,
+                    checkResult: $scope.checkResult,
+                    isPass: $scope.isPass
+                }
+            }).then(function success(response) {
+                // $scope.paper = response.data.data;
+                if(response.data.code === 200){
+                    alert('审核成功');
+                    $window.location.href = '/account/mypaper';
+                }
+            }, function error() {
+                alert('请稍后再试');
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/modules/register/css/register.css"/>
+    <link type="favicon" rel="shortcut icon" href="/images/favicon.ico"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="/script/axios.js"></script>
+</head>
+<body >
+<section class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="logo text-center">
+                <span class="glyphicon glyphicon-education"></span>
+                <span>会议系统</span>
+                <p>注册</p>
+            </div>
+            <form action="" class="form-horizontal form-search" id="registervue">
+                <div class="form-group">
+                    <label for="email-address" class="col-sm-2 control-label">邮箱</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control search-query" id="email-address" v-model="userEmail">
+                    </div>
+                    <div class="col-sm-2 text-center" style="color: red;" v-text="userEmailTips"></div>
+                </div>
+                <div class="form-group">
+                    <label for="user-name" class="col-sm-2 control-label">用户名</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control search-query" id="user-name" placeholder="建议使用真名" v-model="realName"/>
+                    </div>
+                    <div class="col-sm-2 text-center"></div>
+                </div>
+                <div class="form-group" style="">
+                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control search-query" id="password" v-model="password">
+                    </div>
+                    <div class="col-sm-2 text-center" v-text="passwordTips" style="color: red;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password-again" class="col-sm-2 control-label">确认密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control search-query" id="password-again" v-model="passwordAgain">
+                    </div>
+                    <div class="col-sm-2 text-center"></div>
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="check-code" class="col-sm-2 control-label">验证码</label>-->
+<!--                    <div class="col-sm-5">-->
+<!--                        <input type="text" class="form-control" id="check-code">-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-3">-->
+<!--                        <img src="" alt="" width="120" height="38" style="" class="center-block">-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-2 text-center"></div>-->
+<!--                </div>-->
+                <div class="form-group">
+                    <button class="btn center-block" type="button" v-on:click="submitEvent();">注册</button>
+                </div>
+<!--                模态框-->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-body" v-text="registerinfo">
+
+                            </div>
+
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </form>
+            <div class="link text-center">
+                <div class="col-sm-6"><a href="/index">首页</a></div>
+                <div class="col-sm-6">
+                    <span>有账号了？直接</span>
+                    <a href="/login">登录</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+</section>
+<script src="/script/jquery-3.3.1.js"></script>
+<script src="/script/bootstrap.js"></script>
+<script>
+
+    let registervue=new Vue({
+        el:"#registervue",
+        data:{
+            userEmail:"",
+            userEmailTips:"",
+            passwordTips:"",
+            password:"",
+            realName:"",
+            passwordAgain:"",
+            registerinfo:""
+        },
+        methods:{
+            submitEvent:function () {
+                if(this.check()){
+                    let senddata={
+                        userEmail:this.userEmail,
+                        realName:this.realName,
+                        password:this.password
+                    };
+                    //senddata=JSON.stringify(senddata);
+                    axios.post("/insertMyUser",{senddata}).then( (response) =>{
+                         let result = response.data;
+                        if(result.code === 400){
+                            this.userEmailTips = result.message;
+                            setTimeout( ()=> {
+                                this.userEmailTips = '';
+                            }, 2000);
+                        }else{
+                            this.registerinfo="注册成功,自动跳转到登录";
+                            $('#myModal').modal('show');
+                            setTimeout( ()=> {
+                                $('#myModal').modal('hide');
+                                window.location.href = '/login';
+                            }, 1000);
+
+                        }
+                    }).catch(function (error) {
+                        alert('请稍后再试');
+                    })
+                }
+            },
+            check:function () {
+                if(this.userEmail === '' || this.userEmail === undefined){
+                    alert('邮箱不能为空');
+                    return false;
+                }else if(this.realName === '' || this.realName === undefined){
+                    alert('用户名不能为空');
+                    return false;
+                }else if(this.password === '' || this.password === undefined){
+                    alert('密码不能为空');
+                    return false;
+                }else if(this.password !== this.passwordAgain){
+                    this.passwordTips = '两次密码不同';
+                    setTimeout( ()=> {
+                        this.passwordTips = '';
+                    }, 2000);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+    });
+</script>
+</body>
+</html>

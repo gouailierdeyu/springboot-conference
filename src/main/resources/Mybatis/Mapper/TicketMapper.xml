@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.dao.TicketDao">
+    <insert id="insert" parameterType="Ticket">
+        INSERT INTO ticket (name, price, description, conference_name) VALUES
+        (#{name}, #{price}, #{description}, #{conferenceName});
+    </insert>
+    <select id="selectByConferenceName" parameterType="String" resultType="Ticket">
+        SELECT id, name, price, description, conference_name AS conferenName
+        FROM ticket WHERE conference_name = #{conferenceName};
+    </select>
+<!--    <select id="selectByUserEmail" parameterType="String" resultType="Ticket">-->
+<!--        SELECT id, name, price, description, user_email AS userEmail, conference_name AS conferenName-->
+<!--        FROM ticket WHERE user_email = #{userEmail};-->
+<!--    </select>-->
+    <delete id="delete" parameterType="int">
+        DELETE FROM ticket WHERE id = #{id};
+    </delete>
+    <update id="update" parameterType="Report">
+        UPDATE ticket
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="conferenceName != null">conference_name = #{conferenceName}</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+</mapper>

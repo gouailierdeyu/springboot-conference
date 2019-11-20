@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="edit">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>发布会议</title>
+    <link rel="stylesheet" href="../../../../static/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="../../../../static/css/bootstrap/bootstrap-datetimepicker.css"/>
+    <link rel="stylesheet" href="../../../../static/modules/conference/css/createconference.css"/>
+    <link type="favicon" rel="shortcut icon" href="../../../../static/images/favicon.ico"/>
+    <script src="../../../../static/script/angular-1.5.8/angular.js"></script>
+
+</head>
+<body ng-controller="bodyController">
+<header id="nav-header" >
+    <nav class="navbar navbar-default navbar-fixed-top" style="">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-section">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/index" class="navbar-brand">
+                    <span class="glyphicon glyphicon-education"></span>
+                    <span class="brand-gly">会议系统</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="nav-section">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="first-li">
+                        <a href="/conference/edit" class="first-li-first-a" style="">
+                            <div class="" style="">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span>创建活动</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle text-center" data-toggle="dropdown" title="{{userEmail}}">
+                            <img src="" ng-src="{{userMessage.headImgUrl}}" alt="" height="50" width="50">
+                            &nbsp;
+                            <span>{{userEmail|lengthLimit:5}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="text-center">
+                                <a href="/account/myinfo">
+                                    <span class="glyphicon glyphicon-home"></span>
+                                    &nbsp;
+                                    <span>个人中心</span>
+                                </a>
+                            </li>
+                            <li class="text-center">
+                                <a href="/account/myevent">
+                                    <span class="glyphicon glyphicon-bookmark"></span>
+                                    &nbsp;
+                                    <span>我的活动</span>
+                                </a>
+                            </li>
+                            <li class="text-center">
+                                <a href="javascript:void(0);" ng-click="exitEvent();">
+                                    <span class="glyphicon glyphicon-off"></span>
+                                    &nbsp;
+                                    <span>退出</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+<!--                    <li class="third-li">-->
+<!--                        <a href="#" class="third-li-first-a" style="" target="_blank">注册</a>-->
+<!--                        <span class="">/</span>-->
+<!--                        <a href="#" class="third-li-second-a" style="">登录</a>-->
+<!--                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<section class="activity_info_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="" class="activity_info_form form-horizontal">
+                    <div style="" class="activity_main_info common">
+                        <span>1、活动信息</span>
+                        <div class="form-group first-form-group">
+                            <label for="activity_name" class="col-sm-2 control-label">活动名称</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="activity_name" ng-model="conferenceName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">活动时间</label>
+                            <label for="activity_start_time" class="col-sm-1 control-label">开始时间</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control activity_time" id="activity_start_time" ng-model="startTime">
+                            </div>
+                            <label for="activity_end_time" class="col-sm-1 control-label">结束时间</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control activity_time" id="activity_end_time" ng-model="endTime">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="activity_address" class="control-label col-sm-2">活动地点</label>
+                            <div class="col-sm-7" style="position: relative;">
+                                <input type="text" id="activity_address" class="form-control" readonly="readonly" ng-model="address"/>
+                                <div id="map_div" style="position: absolute; z-index: 2; padding: 0; display: none;" class="col-sm-12">
+                                    <label for="address" style="display: none"></label>
+                                    <input type="text" id="address" style="float: right; z-index: 3; border: #777777 solid 1px;">
+                                    <div id="godMap" class="col-sm-12" style="height: 300px; position:absolute; z-index: -1; border: #777777 solid 1px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2"><button type="button" class="btn glyphicon glyphicon-globe" ng-click="showMap();"></button></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">主办方</label>
+                            <label for="activity_owner_name" class="control-label col-sm-1">名称</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="activity_owner_name" class="form-control" ng-model="ownerName">
+                            </div>
+                            <label for="activity_owner_phone_number" class="col-sm-offset-2 col-sm-1 control-label">电话</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="activity_owner_phone_number" class="form-control" ng-model="ownerPhone">
+                            </div>
+                            <label for="activity_owner_email" class="col-sm-offset-2 col-sm-1 control-label">邮箱</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="activity_owner_email" class="form-control" ng-model="ownerEmail">
+                            </div>
+                            <label for="activity_owner_web_address" class="col-sm-offset-2 col-sm-1 control-label">网址</label>
+                            <div class="col-sm-7">
+                                <input type="text" id="activity_owner_web_address" class="form-control" ng-model="ownerWeb">
+                            </div>
+                            <label for="activity_owner_Introduction" class="col-sm-offset-2 col-sm-1 control-label">介绍</label>
+                            <div class="col-sm-7">
+                                <textarea id="activity_owner_Introduction" class="form-control" ng-model="ownerIntroduction"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="activity_type" class="control-label col-sm-2">活动类型</label>
+                            <div class="col-sm-8">
+                                <select name="activity_type" id="activity_type" class="form-control" ng-model="field">
+                                    <option value="经济">经济</option>
+                                    <option value="医疗">医疗</option>
+                                    <option value="教育">教育</option>
+                                    <option value="文艺">文艺</option>
+                                    <option value="科技">科技</option>
+                                    <option value="商务">商务</option>
+                                    <option value="互联网">互联网</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="activity_type" class="control-label col-sm-2">活动图片</label>
+                            <div class="col-sm-5">
+                                <img src="" alt="" id="activity_show" class="img-responsive" style="width: 450px; height: 140px;">
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="javascript:void(0);" type="text" class="form-control text-center" onclick="document.getElementById('activity_image').click();">
+                                    <span class="glyphicon glyphicon-open"></span>
+                                    <span>上传头像</span>
+                                    <input type="file" class="form-control" id="activity_image" onchange="previewImage();" onclick="" style="pointer-events: none;">
+                                </a>
+                                <br>
+                                <p>建议上传1920x600px大小的照片</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="ticket_info common" style="">
+                        <span>2、售票信息</span>
+                        <div class="form-group first-form-group">
+                            <div class="col-sm-12" style="">
+                                <table class="table table-hover table-responsive text-center" style="">
+                                    <thead>
+                                    <tr>
+                                        <th>票名</th>
+                                        <th>价格(元)</th>
+                                        <th>修改</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ticket in ticketList">
+                                            <td ng-bind="ticket.name" title="{{ticket.description}}"></td>
+                                            <td ng-bind="ticket.price">200</td>
+                                            <td>
+                                                <button class="btn" ng-click="deleteTicket($index);">删除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="ticket_info_div col-sm-12" style="">
+                                <label for="ticket_name" class="control-label col-sm-2">票务名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ticket_name" id="ticket_name" class="form-control" ng-model="name">
+                                </div>
+                                <label for="ticket_cost" class="control-label col-sm-2">票务价格</label>
+                                <div class="col-sm-10">
+                                    <input type="number" name="ticket_cost" id="ticket_cost" class="form-control" ng-model="price">
+                                </div>
+                                <label for="ticket_description" class="control-label col-sm-2">票务描述</label>
+                                <div class="col-sm-10">
+                                    <textarea name="ticket_description" id="ticket_description" class="form-control" ng-model="description"></textarea>
+                                </div>
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-2 btn-group center-block">
+                                    <button style="float: left;" class="btn" type="button" ng-click="saveTicket();">保存</button>
+                                    <button style="float: right;" class="btn" type="button" ng-click="cancelTicket();">取消</button>
+                                </div>
+                                <div class="col-sm-5"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="sign_up_info common">
+                        <span>3、报名信息设置</span>
+                        <div class="form-group first-form-group">
+                            <div class="col-sm-12" style="">
+                                <table class="table table-hover table-responsive text-center" style="">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">报名项</th>
+                                        <th class="text-center">类型</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="report in reportList">
+                                        <td ng-bind="report.inputKey" title="{{report.inputKey}}"></td>
+                                        <td>{{report.category|inputType}}</td>
+                                        <td>
+                                            <button class="btn" ng-click="deleteReport($index);">删除</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="ticket_info_div col-sm-12" style="">
+                                <label for="report_name" class="control-label col-sm-2">报名项</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="" id="report_name" class="form-control" ng-model="inputKey">
+                                </div>
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-6 btn-group center-block" style="margin-top: 30px;">
+                                    <button style="float: left;" class="btn" type="button" ng-click="addReport('input');">单行文本</button>
+                                    <button style="float: right;" class="btn" type="button" ng-click="addReport('textarea');">多行文本</button>
+                                </div>
+                                <div class="col-sm-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="submit_div common">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button class="center-block btn" type="button" ng-click="nextEdit();">暂存</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="ic-footer">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-sm-2 ">
+                <p>会议活动</p>
+                <a href="#" class="">关于我们</a>
+                <a href="" class="">加入我们</a>
+                <a href="" class="">隐私政策</a>
+                <a href="" class="">常见问题</a>
+            </div>
+            <div class="col-sm-2">
+                <p>快速访问</p>
+                <a href="#" class="">我创建的活动</a>
+                <a href="" class="">创建活动</a>
+            </div>
+            <div class="col-sm-2">
+                <p>合作伙伴</p>
+                <a href="#" class="">友情链接</a>
+            </div>
+            <div class="col-sm-2">
+                <p>更多</p>
+                <a href="#" class="">手机APP</a>
+                <a href="" class="">会议签到</a>
+            </div>
+            <div class="col-sm-2 col-sm-offset-2">
+                <img src="../../../../static/images/erweima.jpg" alt="" width="126" height="126" class=""/>
+                <div class="blank center-block">关注微信公众号</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 text-center">
+                <p>重庆大学计算机学院 | 苏ICP备15059127号 | 苏ICP证B2-20160175号</p>
+                <p>Copyright©2015 iconference.com</p>
+            </div>
+            <div class="col-sm-2 col-sm-offset-4 text-center">
+                <span class="glyphicon glyphicon-earphone"></span>
+                <span> 020-74548967</span>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../../../../static/script/jquery-3.3.1.js"></script>
+<script src="../../../../static/script/bootstrap.js"></script>
+<script src="../../../../static/script/bootstrap-datetimepicker.js"></script>
+<script type=""
+        src="https://webapi.amap.com/maps?v=1.4.14&key=15db19785a2e16f12f17f9ab6d1edc25">
+</script>
+<script type="" src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script src="../../../../static/modules/conference/script/edit.js"></script>
+<!--<script src="../../../../static/modules/conference/script/conference.js"></script>-->
+
+</body>
+</html>

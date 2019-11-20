@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="signUpApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>报名</title>
+    <link rel="stylesheet" href="../../../../static/css/bootstrap/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../../static/modules/conference/css/conferencesignup.css" type="text/css"/>
+    <link type="favicon" rel="shortcut icon" href="../../../../static/images/favicon.ico"/>
+    <script src="../../../../static/script/angular-1.5.8/angular.js"></script>
+
+</head>
+<body ng-controller="bodyController">
+<header id="head_image" class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="" ng-src="{{conference.imageUrl}}" alt="" class="img-responsive center-block">
+<!--                <button class="btn"><span class="glyphicon glyphicon-chevron-left"></span>返回会议网址</button>-->
+            </div>
+        </div>
+    </div>
+</header>
+<section class="divider"></section>
+<section id="sign_up_ticket">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="" id="sign_up_div">参会者信息</div>
+                <form action="/pay/payment" class="form-horizontal" method="post" accept-charset="UTF-8">
+                    <div class="form-group" ng-repeat="report in reportList">
+                        <label for="{{'input' + $index}}" class="control-label col-sm-2" ng-bind="report.inputKey" ng-show="report.category == 'input'"></label>
+                        <label for="{{'textarea' + $index}}" class="control-label col-sm-2" ng-bind="report.inputKey" ng-show="report.category == 'textarea'"></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control myIndex" id="{{'input' + $index}}" ng-show="report.category == 'input'">
+                            <textarea id="{{'textarea' + $index}}" ng-show="report.category == 'textarea'" class="form-control myIndex"></textarea>
+                        </div>
+                    </div>
+                    <label for="sumPrice" style="display: none;"></label>
+                    <input type="text" id="sumPrice" name="sumPrice" style="display: none" ng-model="sumPrice">
+                    <label for="conferenceName" style="display: none"></label>
+                    <input type="text" id="conferenceName" name="conferenceName" style="display: none" ng-model="conferenceName">
+                    <label for="subject" style="display: none;"></label>
+                    <input type="text" id="subject" style="display: none;" name="subject" ng-model="subject">
+                    <label for="body" style="display: none;"></label>
+                    <input type="text" id="body" style="display: none" name="body" ng-model="body">
+                    <label for="name" style="display: none;"></label>
+                    <input type="text" id="name" style="display: none" name="name" ng-model="userEmail">
+                    <label for="buyTicketListString" style="display: none;"></label>
+                    <input type="text" id="buyTicketListString" style="display: none" name="buyTicketListString">
+                    <label for="buyReportListString" style="display: none;"></label>
+                    <input type="text" id="buyReportListString" style="display: none" name="buyReportListString">
+                    <button type="submit" style="display: none" id="submitButton">测试</button>
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <div class="" id="ticket_div">已购票信息</div>
+                <table class="table table-responsive table-hover text-center">
+                    <tbody>
+                    <tr ng-repeat="ticket in ticketList" ng-hide="ticketSum[$index] == 0">
+                        <td ng-bind="ticket.name"></td>
+                        <td ng-bind="ticketSum[$index]"></td>
+                        <td ng-bind="ticket.price"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <span class="col-sm-3">总价：</span>
+                <span class="col-sm-2" id="sum_money" ng-bind="sumPrice"></span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="divider"></section>
+<section id="pay_way">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="" id="pay_way_div">选择支付方式</div>
+                <div>
+                    <a href="javascript:void(0);" id="alipay">
+                        <img src="../../../../static/images/alipay.PNG" alt="" style="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="divider"></section>
+<section id="submit">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <button class="center-block btn btn-lg" type="submit" ng-click="pay();">去付款</button>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="../../../../static/script/jquery-3.3.1.js"></script>
+<script src="../../../../static/script/bootstrap.js"></script>
+<script>
+    let signUpApp = angular.module('signUpApp', []);
+    signUpApp.config(['$locationProvider', function ($locationProvider) {
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
+    }]);
+    signUpApp.controller('bodyController', function ($scope, $location, $http) {
+        $scope.userEmail = sessionStorage.getItem('userEmail');
+        $scope.conferenceName = $location.search().conferencename;
+        $scope.sumPrice = sessionStorage.getItem('sumPrice');
+        $scope.ticketList = JSON.parse(sessionStorage.getItem('ticketList'));
+        $scope.ticketSum = JSON.parse(sessionStorage.getItem('ticketSum'));
+        $scope.buyReportList = [];
+        $scope.buyTicketList = [];
+        $scope.body = $scope.conferenceName + '门票描述';
+        $scope.subject = $scope.conferenceName + '门票';
+        for(let i = 0; i < $scope.ticketSum.length; i++){
+            if($scope.ticketSum[i] !== 0){
+                $scope.buyTicketList.push({
+                    name: $scope.ticketList[i].name,
+                    sum: $scope.ticketSum[i],
+                    price: Number($scope.ticketList[i].price),
+                    sumPrice: Number($scope.ticketList[i].price) * Number($scope.ticketSum[i]),
+                    payStatue: 'WAIT_BUYER_PAY',
+                    orderId: '',
+                    userEmail: $scope.userEmail,
+                    conferenceName: $scope.conferenceName
+                });
+            }
+        }
+        $http({
+            method: 'GET',
+            url: '/conference/getConference',
+            params: {
+                conferenceName: $scope.conferenceName
+            }
+        }).then(function success(response) {
+            $scope.conference = response.data.data;
+        }, function error() {
+            alert('请稍后再试');
+        });
+        $http({
+            method: 'GET',
+            url: '/conference/getReport',
+            params: {
+                conferenceName: $scope.conferenceName
+            }
+        }).then(function success(response) {
+            $scope.reportList = response.data.data;
+        }, function error() {
+            alert('请稍后再试');
+        });
+        $scope.pay = function () {
+            if($scope.userEmail === null || $scope.userEmail === undefined) {
+                alert('请登录');
+                $window.location.href = '/login';
+                return;
+            }
+            let nodes = document.getElementsByClassName('myIndex');
+            for(let i = 0; i < nodes.length; i++){
+                if(nodes[i].value !== ''){
+                    $scope.buyReportList.push({
+                        inputValue: nodes[i].value,
+                        conferenceName: $scope.conferenceName,
+                        userEmail: $scope.userEmail
+                    });
+                }
+            }
+            document.getElementById('buyReportListString').value = JSON.stringify($scope.buyReportList);
+            document.getElementById('buyTicketListString').value = JSON.stringify($scope.buyTicketList);
+            document.getElementById('submitButton').click();
+        }
+    });
+</script>
+</body>
+</html>

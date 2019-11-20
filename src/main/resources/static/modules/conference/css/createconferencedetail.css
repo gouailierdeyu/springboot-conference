@@ -1,0 +1,103 @@
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+}
+header>nav.navbar{
+    box-shadow: 0 1px 5px #777777;
+    margin-bottom: 0;
+}
+header>nav.navbar-default>div.container-fluid>div.navbar-header>a.navbar-brand{
+    height: 64px;
+    font-size: 23px;
+    line-height: 32px;
+}
+header>nav.navbar-default>div.container-fluid>div.navbar-header>a.navbar-brand:hover{
+    color: black;
+}
+header>nav.navbar-default>div.container-fluid>div.navbar-header>button.navbar-toggle{
+    margin-top: 14px;
+}
+header>nav.navbar-default>div.container-fluid>div.collapse>ul.navbar-right>li>a{
+    line-height: 34px;
+    font-size: 17px;
+}
+header>nav.navbar-default>div.container-fluid>div.collapse>ul.navbar-right>li.first-li>a.first-li-first-a{
+    line-height: 28px;
+    padding-left: 0;
+    padding-right: 0;
+}
+header>nav.navbar-default>div.container-fluid>div.collapse>ul.navbar-right>li.first-li>a.first-li-first-a>div{
+    background-color: #777777;
+    color: white;
+    border: 2px solid #777777;
+}
+header>nav.navbar-default>div.container-fluid>div.collapse>ul.navbar-right>li.first-li>a.first-li-first-a:hover div{
+    background-color: black;
+    border: 2px solid black;
+}
+header>nav.navbar-default>div.container-fluid>div.collapse>ul.navbar-right>li.dropdown{
+    margin-right: 30px;
+    margin-left: 30px;
+}
+header>nav.navbar-default>div.container-fluid>div.collapse>ul.navbar-right>li.dropdown>a{
+    margin-top: 0;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+header>nav.navbar-default>div.container-fluid>div.collapse>ul.navbar-right>li.dropdown>ul.dropdown-menu>li>a{
+    color: #777777;
+    padding: 10px 0;
+    font-size: 15px;
+}
+header>nav.navbar-default>div.container-fluid>div.collapse>ul.navbar-right>li.dropdown>ul.dropdown-menu>li>a:hover{
+    color: #000000;
+}
+
+header>nav.navbar-default>div.container-fluid>div.navbar-header{
+    font-size: 23px;
+    height: 64px;
+    line-height: 64px;
+}
+section#editor_section{
+    position: relative;
+}
+section#editor_section>div#show_section{
+    position: absolute;
+    left: 50%;
+    width: 50%;
+    top: 0;
+    border: 2px solid #777777;
+    height: 100%;
+    padding: 20px;
+    overflow: scroll;
+}
+section#editor_section>div#show_section>p{
+
+}
+section#editor_section>div#show_section>p ul>li{
+    margin-right:5px;
+    margin-left: 5px;
+}
+section#editor_section>div#show_section>p img{
+    border: 1px solid white;
+    /*border-radius: 5%;*/
+    margin-right: 20px;
+    margin-left: 20px;
+}
+section#editor_section>span.info{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    font-size: 18px;
+    background-color: #ADADAD;
+    color: white;
+    padding: 2px;
+    margin-top: 2px;
+    margin-left: 2px;
+    display: none;
+}
+section#editor_section>div#show_section th{
+    text-align: center;
+}

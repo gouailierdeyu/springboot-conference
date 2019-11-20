@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myInfoApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>我的信息</title>
+    <script>
+        if(sessionStorage.getItem('userEmail') === null){
+            alert('请登录');
+            window.location.href = '/login';
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/modules/account/css/mycommont.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/modules/account/css/myinfo.css"/>
+    <link type="favicon" rel="shortcut icon" href="/static/images/favicon.ico"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.7/dist/vue-router.js"> </script>
+    <script src="/static/script/axios.js"></script>
+    <script src="/static/script/angular-1.5.8/angular.js"></script>
+</head>
+<body >
+<header class="">
+    <nav class="nav navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-section">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/index" class="navbar-brand">
+                    <span class="glyphicon glyphicon-education"></span>
+                    <span>会议系统</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="nav-section">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="first-li">
+                        <a href="/conference/edit" class="first-li-first-a" style="">
+                            <div class="" style="">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span>创建活动</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle text-center" data-toggle="dropdown" title="{{userEmail}}">
+                            <img src="" ng-src= "{{userMessage.headImgUrl}}" alt="" height="50" width="50">
+                            &nbsp;
+                            <span>{{userEmail|lengthLimit:5}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="text-center">
+                                <a href="/account/myinfo">
+                                    <span class="glyphicon glyphicon-home"></span>
+                                    &nbsp;
+                                    <span>个人中心</span>
+                                </a>
+                            </li>
+                            <li class="text-center">
+                                <a href="/account/myevent">
+                                    <span class="glyphicon glyphicon-bookmark"></span>
+                                    &nbsp;
+                                    <span>我的活动</span>
+                                </a>
+                            </li>
+                            <li class="text-center">
+                                <a href="javascript:void(0);" ng-click="exitEvent();">
+                                    <span class="glyphicon glyphicon-off"></span>
+                                    &nbsp;
+                                    <span>退出</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            <ul class="nav nav-stacked">
+                <li class="">
+                    <a href="/account/myevent" style="" class="text-center">
+                        <span class="glyphicon glyphicon-bookmark"></span>
+                        &nbsp;
+                        <span>我的活动</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/account/myjoin" style="" class="text-center">
+                        <span class="glyphicon glyphicon-tag"></span>
+                        &nbsp;
+                        <span>我的参与</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/account/mymess" style="" class="text-center">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        &nbsp;
+                        <span>我的消息</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/account/mypaper" style="" class="text-center">
+                        <span class="glyphicon glyphicon-file"></span>
+                        &nbsp;
+                        <span>我的论文</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/account/myinfo" style="" class="text-center">
+                        <span class="glyphicon glyphicon-cog"></span>
+                        &nbsp;
+                        <span>我的账号</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-10" style="">
+            <div class="head">
+                <p>账号信息</p>
+            </div>
+            <div class="user-info">
+                <form action="" class="" enctype="multipart/form-data" method="post" id="MyUserForm">
+                    <div class="form-group">
+                        <label for="user-name" class="control-label col-sm-4">邮箱</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="user-name" readonly="readonly" ng-model="userMessage.userEmail">
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <br>
+                        <label for="head_images" class="control-label col-sm-4" onclick="" id="head-images-label">头像</label>
+                        <div class="col-sm-1">
+                            <img src="/static/images/logo.png" ng-src= "{{userMessage.headImgUrl}}" alt="" height="100" width="100" id="head-show" class="img-responsive">
+                        </div>
+                        <div class="col-sm-3 head-upload">
+                            <a href="javascript:void(0);" type="text" class="form-control text-center" onclick="document.getElementById('head_images').click();">
+                                <span class="glyphicon glyphicon-open"></span>
+                                <span>上传头像</span>
+                                <input type="file" class="form-control" id="head_images" onchange="previewImage();" onclick="">
+                            </a>
+                            <p>上传100x100px的图片</p>
+                            <p>大小<500KB</p>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group" style="margin-top: 100px;">
+                        <br>
+                        <label for="name" class="control-label col-sm-4">姓名</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="name" ng-model="userMessage.realName">
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <!--<br>-->
+                    <div class="form-group">
+                        <br>
+                        <label for="company-name" class="control-label col-sm-4">公司/机构</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="company-name" ng-model="userMessage.companyName">
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <!--<br>-->
+                    <div class="form-group">
+                        <br>
+                        <label for="job-name" class="control-label col-sm-4">职位</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="job-name" ng-model="userMessage.job">
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn center-block" type="button" ng-click="submitEvent();">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/static/script/jquery-3.3.1.js"></script>
+<script src="/static/script/bootstrap.js"></script>
+<script src="/static/modules/account/script/mycommont.js"></script>
+<script src="/static/modules/account/script/myinfo.js"></script>
+</body>
+</html>

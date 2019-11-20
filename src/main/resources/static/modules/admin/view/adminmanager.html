@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="manageApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>审核</title>
+    <script>
+        if(sessionStorage.getItem('admin') === null){
+            alert('请登录');
+            window.location.href = '/manage';
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="../../../../static/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../static/modules/account/css/mycommont.css"/>
+    <link type="favicon" rel="shortcut icon" href="../../../../static/images/favicon.ico"/>
+    <script src="../../../../static/script/angular-1.5.8/angular.js"></script>
+    <script src="../../../../static/script/angular-1.5.8/angular-route.js"></script>
+</head>
+<style>
+    section>div.row>div.col-sm-10>div.ic-info>ng-view>nav.ng-scope{
+        text-align: center;
+        color: #777777;
+        border-radius: 0;
+    }
+    section>div.row>div.col-sm-10>div.ic-info>ng-view>nav.ng-scope>ul>li>a{
+        color: #777777;
+        border-radius: 0;
+    }
+    section>div.row>div.col-sm-10>div.ic-info>ng-view>nav.ng-scope>ul>li.active>a{
+        color: white;
+        background-color: #777777;
+        border-color: #777777;
+    }
+</style>
+<body ng-controller="bodyController">
+<header class="">
+    <nav class="nav navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-section">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/manage" class="navbar-brand">
+                    <span class="glyphicon glyphicon-education"></span>
+                    <span>会议系统管理</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="nav-section">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle text-center" data-toggle="dropdown" title="{{admin}}">
+                            <img src="/upload/admin/head.png" alt="" height="50" width="50">
+                            &nbsp;
+                            <span ng-bind="admin"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="text-center">
+                                <a href="javascript:void(0);" ng-click="exitEvent();">
+                                    <span class="glyphicon glyphicon-off"></span>
+                                    &nbsp;
+                                    <span>退出</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            <ul class="nav nav-stacked">
+                <li class="active">
+                    <a href="/manage" style="" class="text-center">
+                        <span class="glyphicon glyphicon-menu-hamburger"></span>
+                        &nbsp;
+                        <span>系统管理</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-10" style="">
+            <div class="head">
+                <p>会议管理</p>
+                <div class="btn-group">
+                    <a href="#allconference" class="active">
+                        <span>审核/顶置</span>
+                    </a>
+<!--                    <a href="#ticket" ng-class="{'active': ticketIndex==2}" ng-click="setItem(2);">-->
+<!--                        <span>人员管理</span>-->
+<!--                    </a>-->
+                </div>
+            </div>
+            <div class="ic-info" style="">
+                <ng-view></ng-view>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="../../../../static/script/jquery-3.3.1.js" type="text/javascript"></script>
+<script src="../../../../static/script/bootstrap.js" type="text/javascript"></script>
+<script src="../../../../static/script/layer-v3.1.1/layer/layer.js" type="text/javascript"></script>
+<script src="../../../../static/modules/account/script/mycommont.js"></script>
+<script type="text/ng-template" id="allconference" style="position: relative;">
+    <div ng-show="conferenceList.length === 0">暂时没有</div>
+    <div style="height: 240px;">
+        <table class="table table-hover table-responsive text-center" ng-show="conferenceList.length !== 0">
+            <thead>
+            <tr class="">
+                <th>序号</th>
+                <th>名称</th>
+                <th>提交时间</th>
+                <th>审核状态</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="conference in conferenceList" title="{{conference.checkResult}}">
+                <td ng-bind="$index + 1"></td>
+                <td ng-bind="conference.conferenceName"></td>
+                <td ng-bind="conference.updateTime" title="{{conference.checkResult}}"></td>
+                <td>{{conference.myShow|changeShow}}</td>
+                <td>
+                    <a href="" ng-href="{{'/conference/show?conferencename=' + conference.conferenceName}}" target="_blank">详情</a>
+                    &nbsp;
+                    <a href="javascript:void(0);" type="" ng-click="passEvent(conference.conferenceName);">通过</a>
+                    &nbsp;
+                    <a href="javascript:void(0);" type="" ng-click="unPassEvent(conference.conferenceName);">不通过</a>
+                    &nbsp;
+                    <a href="javascript:void(0);" type="" ng-click="top(conference.conferenceName);">顶置</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation" class="" style="">
+        <ul class="pagination" style="">
+            <li>
+                <a href="javascript:void(0);" aria-label="Previous" ng-click="previousAndNext('previous')">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-repeat="i in count" ng-class="{'active': i == pageIndex}">
+                <a href="javascript:void(0);" ng-bind="i" ng-click="getConferenceList(i);">1</a>
+            </li>
+            <li>
+                <a href="javascript:void(0);" aria-label="Next" ng-click="previousAndNext('next')">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</script>
+<script type="text/ng-template" id="manageMyUser">
+    <div ng-show="ticketList.length === 0">暂时没有</div>
+    <table class="table table-hover table-responsive text-center" ng-show="ticketList.length !== 0">
+        <thead>
+        <tr class="">
+            <th>序号</th>
+            <th>门票名称</th>
+            <th>所属会议</th>
+            <th>支付时间</th>
+            <th>数量</th>
+            <th>总金额</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="ticket in ticketList">
+            <td ng-bind="$index + 1"></td>
+            <td ng-bind="ticket.name"></td>
+            <td ng-bind="ticket.conferenceName"></td>
+            <td ng-bind="ticket.updateTime"></td>
+            <td ng-bind="ticket.sum"></td>
+            <td ng-bind="ticket.price"></td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+<script>
+    let manageApp = angular.module('manageApp', ['ngRoute']);
+    manageApp.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.
+        when('/allconference', {
+            templateUrl: 'allconference',
+            controller: 'allConferenceController'
+        }).
+        otherwise({
+            redirectTo: '/allconference'
+        });
+    }]);
+    manageApp.controller('bodyController', function ($scope, $window) {
+        $scope.admin = 'admin';
+        $scope.exitEvent = function () {
+            sessionStorage.removeItem('admin');
+            $window.location.href = '/index';
+        }
+    });
+    manageApp.controller('allConferenceController', function ($scope, $http, $window) {
+        if(sessionStorage.getItem('pageIndex') === undefined || sessionStorage.getItem('pageIndex') === null){
+            $scope.pageIndex = 1;
+        }else{
+            $scope.pageIndex = sessionStorage.getItem('pageIndex');
+        }
+        $scope.getConferenceList = function(pageIndex){
+            $scope.pageIndex = pageIndex;
+            sessionStorage.setItem('pageIndex', $scope.pageIndex);
+            $http({
+                method: 'GET',
+                url: '/conference/getAllConference',
+                params: {
+                    pageIndex: $scope.pageIndex
+                }
+            }).then(function success(response) {
+                $scope.conferenceList = response.data.data;
+            }, function error() {
+                sessionStorage.setItem('id', '12');
+                $window.location.href = '/admin';
+            });
+        };
+        $scope.getConferenceList($scope.pageIndex);
+        $scope.count = [];
+        $http({
+            method: 'GET',
+            url: '/conference/getConferenceCount',
+            params: {
+
+            }
+        }).then(function success(response) {
+            $scope.conferenceCount = response.data.data;
+            for(let i = 1; i <= $scope.conferenceCount; i++){
+                $scope.count.push(i);
+            }
+        }, function error() {
+            $window.location.href = '/admin';
+        });
+        $scope.previousAndNext = function (type) {
+            if(type === "previous"){
+                if(sessionStorage.getItem('pageIndex') === '1'){
+                    return false;
+                }else{
+                    $scope.getConferenceList(Number(sessionStorage.getItem('pageIndex')) - 1);
+                }
+            }else{
+                if(sessionStorage.getItem('pageIndex') === ($scope.conferenceCount + '')){
+                    return false;
+                }else{
+                    $scope.getConferenceList(Number(sessionStorage.getItem('pageIndex')) + 1);
+                }
+            }
+        };
+        $scope.passEvent = function (conferenceName) {
+            $http({
+                method: 'GET',
+                url: '/conference/updateConferenceShow',
+                params: {
+                    conferenceName: conferenceName,
+                    flag: true
+                }
+            }).then(function success(response) {
+                if(response.data.code === 200){
+                    alert('审核成功');
+                    $window.location.reload();
+                }
+            }, function error() {
+                alert('请稍后再试');
+            });
+        };
+        $scope.unPassEvent = function (conferenceName) {
+            layer.open({
+                type : 1,
+                title: '审核信息',
+                content: '<textarea id="conferenceCheck" style="height: 99%; width: 99%; font-size: 18px;"></textarea>',
+                scope: $scope,
+                area: ['45%', '50%'],
+                btn: ['确认', '取消'],
+                yes: function (index, layero) {
+                    console.log(document.getElementById('conferenceCheck').value);
+                    $scope.checkResult = document.getElementById('conferenceCheck').value;
+                    console.log(conferenceName);
+                    $http({
+                        method: 'GET',
+                        url: '/conference/updateConferenceCheckResult',
+                        params: {
+                            conferenceName: conferenceName,
+                            checkResult: $scope.checkResult
+                        }
+                    }).then(function success(response) {
+                        if(response.data.code === 200){
+                            alert('审核成功');
+                            $window.location.reload();
+                        }
+                    }, function error() {
+                        alert('请稍后再试');
+                    });
+                    layer.close(index);
+                },
+                btn2: function (index, layero) {
+
+                }
+            });
+        };
+        $scope.top = function (conferenceName) {
+            $http({
+                method: 'GET',
+                url: '/conference/topConference',
+                params: {
+                    conferenceName: conferenceName,
+                    flag: true
+                }
+            }).then(function success(response) {
+                if(response.data.code === 200){
+                    alert('顶置成功');
+                    $window.location.reload();
+                }
+            }, function error() {
+                alert('请稍后再试');
+            });
+        }
+    });
+    manageApp.filter('changeShow', function () {
+        return function (input) {
+            if(input === -1){
+                return '不通过';
+            }else if(input === 0){
+                return '待审核';
+            }else {
+                return '通过';
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="joinDetailApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="../../modules/account/css/myeventdetail.css" type="text/css"/>
+    <link type="favicon" rel="shortcut icon" href="../../images/favicon.ico"/>
+    <script src="../../script/angular-1.5.8/angular.js"></script>
+
+</head>
+<body ng-controller="bodyController">
+<header id="head_image" class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="" ng-src="{{conference.imageUrl}}" alt="" width="1200" height="360" class="img-responsive">
+            </div>
+        </div>
+    </div>
+</header>
+<section class="divider"></section>
+<section id="paper_section" class="type_section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-10">
+                <div id="paper_div" class="type_div">论文信息</div>
+                <table class="table table-hover table-responsive table-striped text-center">
+                    <thead>
+                    <tr class="">
+                        <th>序号</th>
+                        <th>论文名</th>
+                        <th>作者</th>
+                        <th>提交时间</th>
+                        <th>审核专家</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="paper in paperList">
+                        <td>{{$index + 1}}</td>
+                        <td>{{paper.paperName}}</td>
+                        <td>{{paper.userEmail}}</td>
+                        <td>{{paper.uploadTime}}</td>
+                        <td>{{paper.checkUser}}</td>
+                        <td><a href="" ng-href="{{'/account/paperdetail?papername=' + paper.paperName}}" target="_blank">详情</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="../../script/jquery-3.3.1.js"></script>
+<script src="../../script/bootstrap.js"></script>
+<script src="../../script/layer-v3.1.1/layer/layer.js"></script>
+<script src="../../modules/account/script/myeventdetail.js"></script>
+<script src="../../modules/account/script/joindetail.js"></script>
+</body>
+</html>
