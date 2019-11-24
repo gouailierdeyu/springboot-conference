@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="conference.DAO.Mapper.MyUserMapper">
+    <resultMap id="MyUserResultMap" type="MyUser">
+        <id column="id" property="id"/>
+        <result column="user_email" property="userEmail"/>
+        <result column="pass_word" property="passWord"/>
+        <result column="real_name" property="realName"/>
+        <result column="company_name" property="companyName"/>
+        <result column="job" property="job"/>
+        <result column="head_img_url" property="headImgUrl"/>
+        <collection property="conferenceList" column="userEmail"
+                    select="com.cjf.dao.ConferenceDao.selectByUserEmail"/>
+        <collection property="messageList" column="userEmail"
+                    select="com.cjf.dao.MessageDao.selectByUserEmail"/>
+        <collection property="myOrderList" column="userEmail"
+                    select="com.cjf.dao.MyOrderDao.selectByUserEmail"/>
+        <collection property="paperList" column="userEmail"
+                    select="com.cjf.dao.PaperDao.selectByUserEmail"/>
+        <collection property="ticketDetailList" column="userEmail"
+                    select="com.cjf.dao.TicketDetailDao.selectByUserEmail"/>
+    </resultMap>
+    <insert id="insert" parameterType="MyUser">
+        INSERT INTO myuser (user_email, pass_word, real_name, company_name, job, head_img_url) VALUES
+        (#{userEmail}, #{password}, #{realName}, #{companyName}, #{job}, #{headImgUrl});
+    </insert>
+    <insert id="insertMyConference" parameterType="String">
+        INSERT INTO user_link_conference (user_email, conference_name, orderId, statue) VALUES (#{userEmail}, #{conferenceName}, #{orderId}, #{statue});
+    </insert>
+    <select id="selectByUserEmail" parameterType="String" resultType="MyUser">
+        SELECT id, user_email AS userEmail, pass_word AS password, real_name AS realName, company_name AS companyName, job, head_img_url AS headImgUrl
+        FROM myuser WHERE user_email = #{userEmail};
+    </select>
+    <select id="findQQuser" parameterType="String" resultType="MyUser">
+        SELECT id, user_email AS userEmail, pass_word AS password, real_name AS realName, company_name AS companyName, job, head_img_url AS headImgUrl
+        FROM myuser WHERE real_name = #{realName} and pass_word=#{passWord};
+    </select>
+    <select id="getCheckMyUser" parameterType="String" resultType="MyUser">
+        SELECT user_email AS userEmail, pass_word AS passWord,
+               real_name AS realName, company_name AS companyName, job, head_img_url AS headImgUrl
+        FROM myuser WHERE user_email = #{userEmail} and pass_word=#{passWord};
+    </select>
+    <select id="selectMyJoin" parameterType="String" resultType="Conference">
+        SELECT conference.id, conference.conference_name AS conferenceName, conference.start_time AS startTime,
+               conference.address
+        FROM conference, user_link_conference, myuser WHERE myuser.user_email = #{userEmail}
+        AND myuser.user_email = user_link_conference.user_email
+        AND conference.conference_name = user_link_conference.conference_name AND user_link_conference.statue = 'TRADE_SUCCESS';
+    </select>
+    <delete id="delete" parameterType="int">
+        DELETE FROM myuser WHERE id = #{id};
+    </delete>
+    <update id="update" parameterType="MyUser">
+        UPDATE myuser
+        <set>
+            <if test="userEmail != null">user_email = #{userEmail},</if>
+            <if test="password != null">pass_word = #{password},</if>
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="headImgUrl != null">head_img_url = #{headImgUrl}</if>
+        </set>
+        WHERE user_email = #{userEmail};
+    </update>
+    <update id="updateMyConference" parameterType="String">
+        UPDATE user_link_conference SET statue = #{statue} WHERE orderId = #{orderId};
+    </update>
+</mapper>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="editDetail">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>会议详情</title>
+    <link rel="stylesheet" type="text/css" href="../../../../static/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../static/modules/conference/css/createconferencedetail.css"/>
+    <link type="favicon" rel="shortcut icon" href="../../../../static/images/favicon.ico"/>
+    <script src="../../../../static/script/angular-1.5.8/angular.js"></script>
+</head>
+<body ng-controller="bodyController">
+<header>
+    <nav class="navbar navbar-default navbar-static-top" style="">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-section">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span ng-bind="conferenceName"></span>
+            </div>
+            <div class="collapse navbar-collapse" id="nav-section">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="first-li">
+                        <a href="javascript:void(0);" ng-click="submitEvent();" class="first-li-first-a" style="">
+                            <div class="" style="text-align: center;">
+                                <span class="">发布活动</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle text-center" data-toggle="dropdown" title="{{userEmail}}">
+                            <img src="" ng-src="{{userMessage.headImgUrl}}" alt="" height="50" width="50">
+                            &nbsp;
+                            <span>{{userEmail|lengthLimit:5}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="text-center">
+                                <a href="/account/myinfo">
+                                    <span class="glyphicon glyphicon-home"></span>
+                                    &nbsp;
+                                    <span>个人中心</span>
+                                </a>
+                            </li>
+                            <li class="text-center">
+                                <a href="/account/myevent">
+                                    <span class="glyphicon glyphicon-bookmark"></span>
+                                    &nbsp;
+                                    <span>我的活动</span>
+                                </a>
+                            </li>
+                            <li class="text-center">
+                                <a href="javascript:void(0);" ng-click="exitEvent();">
+                                    <span class="glyphicon glyphicon-off"></span>
+                                    &nbsp;
+                                    <span>退出</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<section id="editor_section">
+    <label for="editor" style="display: none;"></label>
+    <textarea id="editor"></textarea>
+    <span class="info" id="show_info">暂存成功</span>
+    <div class="" id="show_section"></div>
+</section>
+<script src="../../../../static/script/jquery-3.3.1.js"></script>
+<script src="../../../../static/script/bootstrap.js"></script>
+<script src="../../../../static/script/ckeditor/ckeditor.js"></script>
+<script src="../../../../static/modules/conference/script/detail.js"></script>
+</body>
+</html>

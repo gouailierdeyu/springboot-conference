@@ -1,0 +1,44 @@
+header{
+    margin-top: 20px;
+    position: relative;
+}
+header>div.container>div.row>div.col-sm-12>button{
+    position: absolute;
+    top: 10px;
+    left: 40px;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+section.divider{
+    height: 40px;
+}
+section#sign_up_ticket{
+    /*margin-top: 40px;*/
+}
+section.type_section>div.container-fluid>div.row div.type_div{
+    font-size: 20px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #CCCCCC;
+}
+section.type_section>div.container-fluid>div.row>div.col-sm-10>table>thead>tr>th{
+    text-align: center;
+}
+section.type_section>div.container-fluid>div.row>div.col-sm-10>table>thead>tr>th>a{
+    /*text-align: center;*/
+    color: #777777;
+    text-decoration: none;
+}
+section.type_section>div.container-fluid>div.row>div.col-sm-10>table>thead>tr>th>a:hover{
+    /*text-align: center;*/
+    color: #000000;
+}
+section.type_section>div.container-fluid>div.row>div.col-sm-10>table>tbody>tr>td>a{
+    /*text-align: center;*/
+    color: #777777;
+    text-decoration: none;
+}
+section.type_section>div.container-fluid>div.row>div.col-sm-10>table>tbody>tr>td>a:hover{
+    /*text-align: center;*/
+    color: #000000;
+}

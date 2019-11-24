@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.dao.MyOrderDao">
+    <insert id="insert" parameterType="MyOrder">
+        INSERT INTO myorder (order_id, order_subject, order_body, amount, seller_id, alipay_no, status, refund_money,
+        create_time, update_time, user_email, conference_name)
+        VALUES (#{orderId}, #{orderSubject}, #{orderBody}, #{amount}, #{sellerId}, #{payNo}, #{status}, #{refundMoney},
+                #{createTime}, #{updateTime}, #{userEmail}, #{conferenceName});
+    </insert>
+    <select id="selectByOrderId" parameterType="String" resultType="MyOrder">
+        SELECT id, order_id AS orderId, order_subject AS orderObject, amount, seller_id AS sellerId, alipay_no AS payNo, status,
+        refund_money AS  refundMoney, create_time AS createTime, update_time AS updateTime, user_email AS userEmail,
+        conference_name AS conferenceName
+        FROM myorder
+        WHERE order_id = #{orderId};
+    </select>
+    <select id="selectByUserEmail" parameterType="String" resultType="MyOrder">
+        SELECT id, order_id AS orderId, order_subject AS orderObject, amount, seller_id AS sellerId, alipay_no AS payNo, status,
+        refund_money AS  refundMoney, create_time AS createTime, update_time AS updateTime, user_email AS userEmail,
+        conference_name AS conferenceName
+        FROM myorder
+        WHERE user_email = #{userEmail};
+    </select>
+    <delete id="delete" parameterType="int">
+        DELETE FROM myorder WHERE id = #{id};
+    </delete>
+    <update id="update" parameterType="MyOrder">
+        UPDATE myorder
+        <set>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderSubject != null">order_subject = #{orderSubject},</if>
+            <if test="orderBody != null">order_body = #{orderBody},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="sellerId != null">seller_id = #{sellerId},</if>
+            <if test="payNo != null">alipay_no = #{payNo},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="refundMoney != null">refund_money = #{refundMoney},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="userEmail != null">user_email = #{userEmail},</if>
+            <if test="conferenceName != null">conference_name = #{conferenceName}</if>
+        </set>
+        WHERE order_id = #{orderId};
+    </update>
+</mapper>

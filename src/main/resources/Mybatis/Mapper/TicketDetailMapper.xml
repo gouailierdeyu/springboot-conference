@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.dao.TicketDetailDao">
+    <insert id="insert" parameterType="TicketDetail">
+        INSERT INTO ticket_detail (name, sum, price, sum_price, pay_statue, update_time, order_id, user_email, conference_name) VALUES
+        (#{name}, #{sum}, #{price}, #{sumPrice}, #{payStatue}, #{updateTime}, #{orderId}, #{userEmail}, #{conferenceName});
+    </insert>
+    <select id="selectByUserEmail" parameterType="String" resultType="TicketDetail">
+        SELECT id, name, sum, price, sum_price AS sumPrice, update_time AS updateTime, order_id AS orderId, user_email AS userEmail, conference_name AS conferenceName
+        FROM ticket_detail WHERE user_email = #{userEmail} AND pay_statue = 'TRADE_SUCCESS';
+    </select>
+    <select id="selectSumUserByConferenceName" parameterType="String" resultType="com.cjf.dto.daoresultset.ConferenceTicket">
+        SELECT name, price, sum(sum) as sum, sum(sum_price) AS priceSum, conference_name AS conferenceName FROM ticket_detail
+        WHERE conference_name = #{conferenceName} AND pay_statue = 'TRADE_SUCCESS' GROUP BY name;
+    </select>
+    <delete id="delete" parameterType="int">
+
+    </delete>
+    <update id="update" parameterType="TicketDetail">
+        UPDATE ticket_detail
+        <set>
+            <if test="payStatue != null">pay_statue = #{payStatue}</if>
+        </set>
+        WHERE order_id = #{orderId};
+    </update>
+    <delete id="setMode">
+        SET sql_mode = '';
+    </delete>
+</mapper>

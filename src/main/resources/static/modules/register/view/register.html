@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="registerApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="../../../../static/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../../static/modules/register/css/register.css"/>
+    <link type="favicon" rel="shortcut icon" href="../../../../static/images/favicon.ico"/>
+    <script src="../../../../static/script/angular-1.5.8/angular.js"></script>
+</head>
+<body ng-controller="bodyController">
+<section class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="logo text-center">
+                <span class="glyphicon glyphicon-education"></span>
+                <span>会议系统</span>
+                <p>注册</p>
+            </div>
+            <form action="" class="form-horizontal">
+                <div class="form-group">
+                    <label for="email-address" class="col-sm-2 control-label">邮箱</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="email-address" ng-model="userEmail">
+                    </div>
+                    <div class="col-sm-2 text-center" style="color: red;" ng-bind="userEmailTips"></div>
+                </div>
+                <div class="form-group">
+                    <label for="user-name" class="col-sm-2 control-label">用户名</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="user-name" placeholder="建议使用真名" ng-model="realName"/>
+                    </div>
+                    <div class="col-sm-2 text-center"></div>
+                </div>
+                <div class="form-group" style="">
+                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="password" ng-model="password">
+                    </div>
+                    <div class="col-sm-2 text-center" ng-bind="passwordTips" style="color: red;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password-again" class="col-sm-2 control-label">确认密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="password-again" ng-model="passwordAgain">
+                    </div>
+                    <div class="col-sm-2 text-center"></div>
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="check-code" class="col-sm-2 control-label">验证码</label>-->
+<!--                    <div class="col-sm-5">-->
+<!--                        <input type="text" class="form-control" id="check-code">-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-3">-->
+<!--                        <img src="" alt="" width="120" height="38" style="" class="center-block">-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-2 text-center"></div>-->
+<!--                </div>-->
+                <div class="form-group">
+                    <button class="btn center-block" type="button" ng-click="submitEvent();">注册</button>
+                </div>
+            </form>
+            <div class="link text-center">
+                <div class="col-sm-6"><a href="/index">首页</a></div>
+                <div class="col-sm-6">
+                    <span>有账号了？直接</span>
+                    <a href="/login">登录</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+</section>
+<script src="../../../../static/script/jquery-3.3.1.js"></script>
+<script src="../../../../static/script/bootstrap.js"></script>
+<script>
+    let registerApp = angular.module('registerApp', []);
+    registerApp.controller('bodyController', function ($scope, $http, $window, $timeout) {
+        $scope.submitEvent = function(){
+            if($scope.check()){
+                $http({
+                    method: 'GET',
+                    url: '/insertMyUser',
+                    params: {
+                        userEmail: $scope.userEmail,
+                        realName: $scope.realName,
+                        password: $scope.password
+                    }
+                }).then(function success(response) {
+                    $scope.result = response.data;
+                    if($scope.result.code === 400){
+                        $scope.userEmailTips = $scope.result.message;
+                        $timeout(function () {
+                            $scope.userEmailTips = '';
+                        }, 2000);
+                    }else{
+                        alert('注册成功,自动跳转到登录');
+                        $window.location.href = '/login';
+                    }
+                }, function error() {
+                    alert('请稍后再试');
+                });
+            }
+        };
+        $scope.check = function(){
+            if($scope.userEmail === '' || $scope.userEmail === undefined){
+                alert('邮箱不能为空');
+                return false;
+            }else if($scope.realName === '' || $scope.realName === undefined){
+                alert('用户名不能为空');
+                return false;
+            }else if($scope.password === '' || $scope.password === undefined){
+                alert('密码不能为空');
+                return false;
+            }else if($scope.password !== $scope.passwordAgain){
+                $scope.passwordTips = '两次密码不同';
+                $timeout(function () {
+                    $scope.passwordTips = '';
+                }, 2000);
+                return false;
+            }
+            return true;
+        };
+    });
+</script>
+</body>
+</html>
