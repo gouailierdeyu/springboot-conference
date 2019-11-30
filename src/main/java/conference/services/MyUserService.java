@@ -87,7 +87,7 @@ public class MyUserService {
     }
 
     public void doUpdateMyUser(MyUser myUser){
-       // myUserMapper.update(myUser);
+       myUserMapper.update(myUser);
     }
 
 

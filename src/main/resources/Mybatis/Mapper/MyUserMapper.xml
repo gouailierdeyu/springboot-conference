@@ -60,7 +60,7 @@
             <if test="job != null">job = #{job},</if>
             <if test="headImgUrl != null">head_img_url = #{headImgUrl}</if>
         </set>
-        WHERE user_email = #{userEmail};
+        WHERE id = #{id};
     </update>
     <update id="updateMyConference" parameterType="String">
         UPDATE user_link_conference SET statue = #{statue} WHERE orderId = #{orderId};

@@ -13,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.ResourceUtils;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -63,6 +65,21 @@ public class Springtest {
 		System.out.println(template.opsForValue().get("czy"));
 
 	}
+
+	@Test
+	public void testdirs(){
+		String savepath= null;
+		try {
+			savepath = ResourceUtils.getURL("classpath:").getPath();
+			String serverFilePath =savepath+ "/static/upload/headImg/" + "userEmail";
+			System.out.println(serverFilePath);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	@Test
 	public void testjava(){
 		Map<String,String> map=new HashMap<>();
