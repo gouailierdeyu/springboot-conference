@@ -36,7 +36,7 @@ public class ShiroConfing  {
         // 设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        Map<String, Filter> myAuthorFilterMap=new HashMap<>();
+        Map<String, Filter> myAuthorFilterMap=new LinkedHashMap<>();
         myAuthorFilterMap.put("authc", new MyAuthorFilter());
         shiroFilterFactoryBean.setFilters(myAuthorFilterMap);
         // 添加Shiro内置过滤器
@@ -70,8 +70,10 @@ public class ShiroConfing  {
         filerMap.put("/register","anon");
         filerMap.put("/insertMyUser","anon");
         filerMap.put("/login","anon");
-        filerMap.put("/**","anon");
         filerMap.put("/checkMyUser","anon");
+        filerMap.put("/account/**","authc");
+        filerMap.put("/**","anon");
+
 
 
         //授权过滤器
