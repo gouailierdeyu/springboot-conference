@@ -18,18 +18,18 @@ public class ConferenceService {
     ConferenceMapper conferenceMapper;
 
     public  List<Conference> getMiddleConferenceList(){
-        return conferenceMapper.selectList(new QueryWrapper<Conference>().eq("myshow", 1).orderByDesc("top_index").last("limit 5,8").lambda());
+        return conferenceMapper.selectList(new QueryWrapper<Conference>().eq("myshow", 1).orderByDesc("top_index").last("limit 8 OFFSET 5").lambda());
 
     }
 
 
     public  List<Conference> getBottomConferenceList(){
-        return conferenceMapper.selectList(new QueryWrapper<Conference>().eq("myshow", 1).orderByDesc("update_time").last("limit 6").lambda());
+        return conferenceMapper.selectList(new QueryWrapper<Conference>().eq("myshow", 1).orderByDesc("update_time").last("limit 8").lambda());
 
     }
 
     public  List<Conference> getTopConferenceList(){
-        return conferenceMapper.selectList(new QueryWrapper<Conference>().eq("myshow", 1).orderByDesc("top_index").last("limit 0,5").lambda());
+        return conferenceMapper.selectList(new QueryWrapper<Conference>().eq("myshow", 1).orderByDesc("top_index").last("limit 5").lambda());
 
     }
 

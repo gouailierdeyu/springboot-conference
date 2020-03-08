@@ -1,5 +1,7 @@
 package conference.services;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
 import conference.DAO.Mapper.MyUserMapper;
 import conference.DAO.ORM.MyUser;
 import conference.Utils.ResultSet;
@@ -14,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class MyUserService {
+public class MyUserService  {
 
     @Autowired
     MyUserMapper myUserMapper;
@@ -49,8 +51,9 @@ public class MyUserService {
         SimpleHash simpleHash=new SimpleHash("MD5",password);
         String hashpassword=simpleHash.toHex();
         try {
-           int s= myUserMapper.insert(new MyUser(userEmail,realName,hashpassword));
+            myUserMapper.insert(new MyUser(userEmail,realName,hashpassword));
         }catch (Exception ex){
+            ex.printStackTrace();
           return  new ResultSet(400,"邮箱重复","");
         }
         return new ResultSet(200,"注册成功","");
@@ -88,6 +91,7 @@ public class MyUserService {
 
     public void doUpdateMyUser(MyUser myUser){
        myUserMapper.update(myUser);
+
     }
 
 
