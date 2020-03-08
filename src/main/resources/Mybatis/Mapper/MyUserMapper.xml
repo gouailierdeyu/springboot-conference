@@ -20,8 +20,8 @@
         <collection property="ticketDetailList" column="userEmail"
                     select="com.cjf.dao.TicketDetailDao.selectByUserEmail"/>
     </resultMap>
-    <insert id="insert" parameterType="MyUser">
-        INSERT INTO myuser (user_email, pass_word, real_name, company_name, job, head_img_url) VALUES
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="MyUser">
+        INSERT INTO myuser ( user_email, pass_word, real_name, company_name, job, head_img_url) VALUES
         (#{userEmail}, #{password}, #{realName}, #{companyName}, #{job}, #{headImgUrl});
     </insert>
     <insert id="insertMyConference" parameterType="String">
