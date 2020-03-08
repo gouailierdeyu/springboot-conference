@@ -1,11 +1,14 @@
 package conference.Contorller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import conference.Configuration.AllUserToken;
 import conference.Configuration.UserType;
 import conference.services.MyUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +27,13 @@ import java.net.URL;
  * Created by CZY    Time : 2019/9/28 18:41
  */
 @Controller
+@Api(tags = "QQ登录接口")
 @RequestMapping("/user")
 public class QQLoginCtrl {
 
     @Autowired
     MyUserService myUserService;
+
 
     @GetMapping("/qqlogin")
     public void qqlogin(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -49,6 +54,8 @@ public class QQLoginCtrl {
 
     }
 
+
+    @ApiOperation(value = "QQ登录")
     @GetMapping("/qqlogining")
     public String qqlogining(String access_token,String expires_in,String state,HttpServletRequest request) throws Exception{
         URL url=new URL("https://graph.qq.com/oauth2.0/me?access_token=" + access_token);
@@ -74,7 +81,7 @@ public class QQLoginCtrl {
             result=result.replaceAll("\\)","");
             result=result.trim();
             System.out.println(result);
-            JSONObject  jsonObject=new JSONObject(result);
+            JSONObject jsonObject=JSON.parseObject(result);
             String client_id=jsonObject.getString("client_id");
             String openid=jsonObject.getString("openid");
             URL url1=new URL("https://graph.qq.com/user/get_user_info?access_token="+access_token+"&oauth_consumer_key="+client_id+"&openid="+openid);
@@ -94,8 +101,8 @@ public class QQLoginCtrl {
                 String result1 = strBuffer1.toString();
                 is1.close();
                 connection1.disconnect();
-                JSONObject jsonObject1 = new JSONObject(result1);
-                if(jsonObject1.getInt("ret")==0){
+                JSONObject jsonObject1 = JSON.parseObject(result1);
+                if(jsonObject1.getIntValue("ret")==0){
                     String name=jsonObject1.getString("nickname");
                     String figureurl_qq_1=jsonObject1.getString("figureurl_qq_1");
                     if(myUserService.doFindQQuser(name, openid)==0){ //这里存入数据库

@@ -88,6 +88,7 @@ public class MainPageCtrl {
             Subject currsubject= SecurityUtils.getSubject();
             if(currsubject.isAuthenticated() || currsubject.isRemembered()){
                     MyUser myUser=(MyUser) currsubject.getPrincipal();
+                    //这里没有去数据库查找
                     return  new ResultSet(200,"ok",myUser) ;
             }
 
