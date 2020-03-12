@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>学习测试使用，不作其他目的</title>
+<!--    <script src="/script/vue.js" ></script>-->
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <link type="favicon" rel="shortcut icon" href="/images/favicon.ico"/>
+    <script src="/script/jquery-3.3.1.js"></script>
+    <script src="/script/bootstrap.js"></script>
+    <script src="/script/js.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="/script/axios.js"></script>
+
+    <style>
+        [v-cloak]{
+            display:none !important;
+            /*display:none !important; ///解决vue{{}}内容在页面加载时，闪烁出现*/
+            /*//使用v-text表示文本不会出现闪烁问题*/
+        }
+        body{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body >
+<div id="mainvue" v-cloak>
+<header id="nav-header" >
+    <nav class="navbar navbar-default navbar-fixed-top" style="">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-section">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/index" class="navbar-brand">
+                    <span class="glyphicon glyphicon-education"></span>
+                    <span class="brand-gly">会议系统</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="nav-section">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                            <span>发现活动</span>
+
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu" style="">
+                            <div class="container">
+                                <div class="col-sm-12 second">
+                                    <div class="col-sm-3">
+                                        <span class="glyphicon glyphicon-heart"></span>
+                                        <span class="gly-text">兴趣</span>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span><a href="/conference/search">全部</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByField('经济');">经济</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByField('医疗');">医疗</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByField('教育');">教育</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByField('文艺');">文艺</a></span>
+                                        <br>
+                                        <br>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByField('科技');">科技</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByField('商务');">商务</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByField('互联网');">互联网</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByField('学术');">学术</a></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 third">
+                                    <div class="col-sm-3">
+                                        <span class="glyphicon glyphicon-map-marker"></span>
+                                        <span class="gly-text">城市</span>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <span><a href="/conference/search">全部</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('北京');">北京</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('上海');">上海</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('广州');">广州</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('深圳');">深圳</a></span>
+                                        <br>
+                                        <br>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('天津');">天津</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('重庆');">重庆</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('成都');">成都</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('武汉');">武汉</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('湖南');">湖南</a></span>
+                                        <br>
+                                        <br>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('西安');">西安</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('厦门');">厦门</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('青岛');">青岛</a></span>
+                                        <span><a href="javascript:void(0);" v-on:click="searchClickByAddress('石家庄');">石家庄</a></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <label for="search-text">活动</label>
+                        <input type="text" class="form-control" id="search-text" placeholder="关键字查询" v-model="searchKey">
+                    </div>
+                    <button type="button" class="" v-on:click="searchClickByName();">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="first-li">
+                        <a href="/conference/edit" class="first-li-first-a" style="">
+                            <div class="" style="">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span>创建活动</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="third-li" v-show="showFlag">
+                        <a href="/register" class="third-li-first-a" style="">注册</a>
+                        <span class="">/</span>
+                        <a href="/login" class="third-li-second-a" style="">登录</a>
+                    </li>
+                    <li class="dropdown" v-show="showFlag2">
+                        <a href="javascript:void(0);" class="dropdown-toggle text-center" data-toggle="dropdown" style="padding-top: 7px; padding-bottom: 7px;">
+                            <img src="" :src="userMessage.headImgUrl" alt="" height="25" width="25">
+                            &nbsp;
+                            <span>{{userMessage.realName|lengthLimit(5)}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="text-center">
+                                <a href="/account/index">
+                                    <span class="glyphicon glyphicon-home"></span>
+                                    &nbsp;
+                                    <span>个人中心</span>
+                                </a>
+                            </li>
+                            <li class="text-center">
+                                <a href="/account/event">
+                                    <span class="glyphicon glyphicon-bookmark"></span>
+                                    &nbsp;
+                                    <span>我的活动</span>
+                                </a>
+                            </li>
+                            <li class="text-center">
+                                <a href="javascript:void(0);" v-on:click="exitEvent()">
+                                    <span class="glyphicon glyphicon-off"></span>
+                                    &nbsp;
+                                    <span>退出</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="carousel slide center-block" id="carouse-section" data-ride="carousel" style="">
+    <ol class="carousel-indicators">
+        <li data-target="#carouse-section" data-slide-to="0" class=""></li>
+        <li data-target="#carouse-section" data-slide-to="1" class=""></li>
+        <li data-target="#carouse-section" data-slide-to="2" class=""></li>
+        <li data-target="#carouse-section" data-slide-to="3" class=""></li>
+        <li data-target="#carouse-section" data-slide-to="4" class=""></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item" v-for="(conference,index) in topConferenceList" v-bind:class="{'active': index==0}">
+            <a href="javascript:void(0);" v-bind:href=" '/conference/show?conferencename=' + conference.conferenceName" target="_blank">
+                <img src="" v-bind:src="conference.imageUrl" alt="" class="img-responsive center-block"/>
+            </a>
+            <div class="carousel-caption"></div>
+        </div>
+    </div>
+    <a href="#carouse-section" class="left carousel-control" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a href="#carouse-section" class="right carousel-control" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</section>
+
+<section class="display-hot">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="glyphicon glyphicon-fire"></span>
+                <span>热门活动</span>
+            </div>
+            <div class="col-sm-3" v-for="conference in middleConferenceList">
+                <div class="context">
+                    <a href="javascript:void(0);" v-bind:href=" '/conference/show?conferencename=' + conference.conferenceName" target="_blank">
+                        <div>
+                            <img  v-bind:src="conference.imageUrl" alt="" class="img-responsive center-block" style="">
+                        </div>
+                        <div class="text-center">
+
+                            <span class="ic-description">{{conference.conferenceName|lengthLimit(16)}}</span>
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            <span class="gly-date" v-text="conference.startTime"></span>
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                            <span class="gly-local">{{conference.address|getAddress}}</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="display-new">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="glyphicon glyphicon-bookmark"></span>
+                <span>最新活动</span>
+            </div>
+            <div class="col-sm-3" v-for="conference in bottomConferenceList" >
+                <div class="context">
+                    <a href="javascript:void(0);" :href=" '/conference/show?conferencename=' + conference.conferenceName" target="_blank">
+                        <div>
+                            <img src="" :src="conference.imageUrl" alt="" class="img-responsive center-block" style="">
+                        </div>
+                        <div class="text-center">
+                            <span class="ic-description">{{conference.conferenceName|lengthLimit(16)}}</span>
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            <span class="gly-date" v-text="conference.startTime"></span>
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                            <span class="gly-local">{{conference.address|getAddress}}</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<section class="ic-owner">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+                <span>活跃主办方</span>
+            </div>
+            <div class="col-sm-3">
+                <a><img src="/images/GrowingIO.png" alt="#" height="262" width="262" class="img-responsive"></a>
+            </div>
+            <div class="col-sm-3 second-col">
+                <a class="first-a"><img src="/images/InfoQ.png" alt="" height="120" width="262" class="img-responsive"></a>
+                <a class="second-a"><img src="/images/dbaplus.png" alt="" height="120" width="262" class="img-responsive"></a>
+            </div>
+            <div class="col-sm-3 third-a">
+                <a class="first-a"><img src="/images/QINGCLOUD.png" alt="" height="120" width="262" class="img-responsive"></a>
+                <a class="second-a"><img src="/images/segmentfault.png" alt="" height="120" width="262" class="img-responsive"></a>
+            </div>
+            <div class="col-sm-3 fourth-a">
+                <a class="first-a"><img src="/images/toutiao.png" alt="" height="120" width="262" class="img-responsive"></a>
+                <a class="second-a"><img src="/images/TINGYUN.png" alt="" height="120" width="262" class="img-responsive"></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="ic-footer">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-sm-2 ">
+                <p>会议活动</p>
+                <a href="#" class="">关于我们</a>
+                <a href="" class="">加入我们</a>
+                <a href="" class="">隐私政策</a>
+                <a href="" class="">常见问题</a>
+            </div>
+            <div class="col-sm-2">
+                <p>快速访问</p>
+                <a href="#" class="">我创建的活动</a>
+                <a href="" class="">创建活动</a>
+            </div>
+            <div class="col-sm-2">
+                <p>合作伙伴</p>
+                <a href="#" class="">友情链接</a>
+            </div>
+            <div class="col-sm-2">
+                <p>更多</p>
+                <a href="#" class="">手机APP</a>
+                <a href="" class="">会议签到</a>
+            </div>
+            <div class="col-sm-2 col-sm-offset-2">
+                <img src="/images/gongzhonghao.jpg" alt="" width="126" height="126" class=""/>
+                <div class="blank center-block">关注微信公众号</div>
+                <span class="glyphicon glyphicon-envelope"></span>
+                <span>20155609@cqu.edu.cn</span>
+            </div>
+            <div class="col-sm-12">
+                <p class=" text-center" style="color:white"><a target="_blank" href="http://www.beian.miit.gov.cn">渝ICP备19009646号&nbsp;</a>Copyright 2019 iconference.com</p>
+
+            </div>
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+</body>
+<script>
+    var vm=new Vue({
+        el:"#mainvue",
+        data:{
+            searchKey:"",
+            showFlag:true,
+            showFlag2:false,
+            userMessage:"",
+            topConferenceList:[],
+            middleConferenceList:[],
+            bottomConferenceList:[]
+        },
+        filters:{
+            getAddress:function (address) {
+                let addressNew =  JSON.parse(address);
+                if(addressNew.district.length > 6){
+                    return addressNew.district.substring(0, 6) + '...';
+                }else{
+                    return addressNew.district;
+                }
+            },
+            lengthLimit:function (input,length) {
+                if(input == null||input=="")
+                    return '';
+                if(input.length > length){
+                    return input.substring(0, length) + '...';
+                }
+                else return input;
+            }
+        },
+        methods:{
+            searchClickByAddress:function (address) {
+                sessionStorage.setItem('address', address);
+                window.location.href = '/conference/search';
+            },
+            searchClickByField:function (field) {
+                sessionStorage.setItem('field', field);
+                window.location.href = '/conference/search';
+            },
+            searchClickByName:function(){
+                let vm=this;
+                vm.searchKey= vm.searchKey.trim();
+                if(vm.searchKey==null||vm.searchKey==""||vm.searchKey=="  ")
+                    return ;
+                sessionStorage.setItem('searchKey', this.searchKey);
+                window.location.href = '/conference/search?searchKey='+vm.searchKey;
+            },
+            exitEvent:function () {
+                sessionStorage.removeItem('userEmail');
+                sessionStorage.removeItem('conferenceIndex');
+                sessionStorage.removeItem('ticketIndex');
+                sessionStorage.removeItem('index');
+                axios.get("/logout").then(function (value) {
+                        if(value.data=="logout")
+                            window.location.href="/index";
+                }).catch(function (reason) {
+
+                });
+
+            }
+
+        },
+        created: function () {
+            let vm=this;
+            // if(sessionStorage.getItem('userEmail') === null || sessionStorage.getItem('userEmail') === undefined){
+            //     vm.showFlag=true;
+            //     vm.showFlag2=false;
+            // }else{
+            //     axios.get("/getMyUser" ,{ params : { userEmail: sessionStorage.getItem('userEmail') } } ).then(function (response) {
+            //         vm.showFlag = false;
+            //         vm.showFlag2 = true;
+            //         vm.userMessage = response.data.data;
+            //     }).catch(function (error) {
+            //         window.location.href= '/index';
+            //     });
+            // }
+
+            axios.get("/checkme").then(function (response) {
+                if(response.data.code==200){
+                    vm.showFlag = false;
+                    vm.showFlag2 = true;
+                    vm.userMessage = response.data.data;
+                }else{
+                    vm.showFlag = true;
+                    vm.showFlag2 = false;
+                }
+            }).catch(function (error) {
+                vm.showFlag = true;
+                vm.showFlag2 = false;
+            });
+
+            axios.get("/conference/getTopConferenceList").then(function (response) {
+                vm.topConferenceList = response.data.data;
+            }).catch(function (error) {
+                window.location.href = '/index';
+            });
+            axios.get("/conference/getMiddleConferenceList").then(function (response) {
+                vm.middleConferenceList = response.data.data;
+            }).catch(function (error) {
+                window.location.href = '/index';
+            });
+            axios.get("/conference/getBottomConferenceList").then(function (response) {
+                vm.bottomConferenceList = response.data.data;
+            }).catch(function (error) {
+                window.location.href = '/index';
+            });
+
+
+        }
+
+    });
+
+</script>
+
+</html>

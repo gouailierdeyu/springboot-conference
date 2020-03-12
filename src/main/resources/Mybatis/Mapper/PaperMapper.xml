@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.dao.PaperDao">
+    <insert id="insert" parameterType="Paper">
+        INSERT INTO paper (paper_name, abstract, file_url, upload_time, update_time, is_pass, check_result, check_user, user_email, conference_name) VALUES
+        (#{paperName}, #{paperAbstract}, #{fileUrl}, #{uploadTime}, #{updateTime}, #{isPass}, #{checkResult}, #{checkUser}, #{userEmail}, #{conferenceName});
+    </insert>
+    <delete id="delete" parameterType="int">
+        DELETE FROM paper WHERE id = #{id};
+    </delete>
+    <update id="update" parameterType="Paper">
+        UPDATE paper
+        <set>
+            <if test="paperName != null">paper_name = #{paperName},</if>
+            <if test="paperAbstract != null">abstract = #{paperAbstract},</if>
+            <if test="fileUrl != null">file_url = #{fileUrl},</if>
+            <if test="uploadTime != null">upload_time = #{uploadTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isPass != null">is_pass = #{isPass},</if>
+            <if test="checkResult != null">check_result = #{checkResult},</if>
+            <if test="checkUser != null">check_user = #{checkUser},</if>
+            <if test="userEmail != null">file_url = #{userEmail},</if>
+            <if test="conferenceName != null">conference_name = #{conferenceName}</if>
+        </set>
+        WHERE paper_name = #{paperName};
+    </update>
+    <select id="selectByPaperName" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+               upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE paper_name = #{paperName};
+    </select>
+    <select id="selectByUserEmail" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+               upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE user_email = #{userEmail};
+    </select>
+    <select id="selectByCheckUser" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+               upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE check_user = #{checkUser} AND is_pass = 2;
+    </select>
+    <select id="selectUnPassByUserEmail" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+               upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE user_email = #{userEmail} AND is_pass = -1;
+    </select>
+    <select id="selectPassByUserEmail" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+               upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE user_email = #{userEmail} AND is_pass = 1;
+    </select>
+    <select id="selectUnCheckByUserEmail" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+               upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE user_email = #{userEmail} AND is_pass = -2;
+    </select>
+    <select id="selectWaitCheckByUserEmail" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+               upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE user_email = #{userEmail} AND (is_pass = -2 OR is_pass = 2);
+    </select>
+    <select id="selectByConferenceName" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+        upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE conference_name = #{conferenceName};
+    </select>
+    <select id="selectPassByConferenceName" parameterType="String" resultType="Paper">
+        SELECT id, paper_name AS paperName, abstract AS paperAbstract, file_url AS fileUrl,
+               upload_time AS uploadTime, update_time AS updateTime, is_pass AS isPass, check_result AS checkResult, check_user AS checkUser, user_email AS userEmail, conference_name AS conferenceName
+        FROM paper WHERE conference_name = #{conferenceName} AND is_pass = 1;
+    </select>
+</mapper>

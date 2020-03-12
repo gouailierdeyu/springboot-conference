@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.dao.OwnerDao">
+    <insert id="insert" parameterType="Owner">
+        INSERT INTO owner (name, phone_number, email, web, introduction, conference_name) VALUES
+        (#{name}, #{phoneNumber}, #{email}, #{web}, #{introduction}, #{conferenceName});
+    </insert>
+    <select id="selectByConferenceName" parameterType="String" resultType="Owner">
+        SELECT id, name, phone_number AS phoneNumber, email, web, introduction, conference_name AS conferenceName
+        FROM owner WHERE conference_name = #{conferenceName};
+    </select>
+    <delete id="delete" parameterType="int">
+        DELETE FROM owner WHERE id = #{id};
+    </delete>
+    <update id="update" parameterType="Owner">
+        UPDATE owner
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="web != null">web = #{web},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="conferenceName != null">conference_name = #{conferenceName}</if>
+        </set>
+        WHERE conference_name = #{conferenceName};
+    </update>
+</mapper>

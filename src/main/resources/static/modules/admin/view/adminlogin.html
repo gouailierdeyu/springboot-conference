@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="adminApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>管理员登录</title>
+    <link rel="stylesheet" type="text/css" href="../../../../static/css/bootstrap/bootstrap.css"/>
+    <link type="favicon" rel="shortcut icon" href="../../../../static/images/favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="../../../../static/modules/login/css/login.css"/>
+    <script src="../../../../static/script/angular-1.5.8/angular.js"></script>
+</head>
+<body ng-controller="bodyController">
+<section class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="logo text-center">
+                <span class="glyphicon glyphicon-education"></span>
+                <span>会议系统</span>
+                <p>管理员入口</p>
+            </div>
+            <form action="" class="form-horizontal">
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 control-label">账号</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="username" ng-model="username"/>
+                    </div>
+                    <div class="col-sm-2 text-center" id="user_email_tips" ng-bind="username_tips"></div>
+                </div>
+                <div class="form-group" style="">
+                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control" id="password" ng-model="password"/>
+                    </div>
+                    <div class="col-sm-2 text-center" id="password_tips" ng-bind="password_tips"></div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn center-block" id="login" ng-click="loginEvent();">登录</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+</section>
+<script src="../../../../static/script/jquery-3.3.1.js"></script>
+<script src="../../../../static/script/bootstrap.js"></script>
+<script>
+    let adminApp = angular.module('adminApp', []);
+    adminApp.controller('bodyController', function ($scope, $http, $timeout, $window) {
+        $scope.username = '';
+        $scope.password = '';
+        $scope.loginEvent = function () {
+            if($scope.username === ''){
+                $scope.username_tips = '账户为空';
+                $timeout(function () {
+                    $scope.username_tips = '';
+                }, 2000);
+            }
+            if($scope.password === ''){
+                $scope.password_tips = '密码为空';
+                $timeout(function () {
+                    $scope.password_tips = '';
+                }, 2000);
+            }
+            else {
+                $http({
+                    method: 'GET',
+                    url: '/getAdmin',
+                    params: {
+                        username: $scope.username,
+                        password: $scope.password
+                    }
+                }).then(function success(response){
+                    if(response.data.message === null){
+                        sessionStorage.setItem('admin', $scope.username);
+                        $window.location.href = '/manage';
+                    }
+                    else{
+                        if(response.data.message.length === 5){
+                            $scope.username_tips = '账户不存在';
+                            $timeout(function () {
+                                $scope.username_tips = '';
+                            }, 2000);
+                        }
+                        if(response.data.message.length === 4){
+                            $scope.password_tips = '密码错误';
+                            $timeout(function () {
+                                $scope.password_tips = '';
+                            }, 2000);
+                        }
+                    }
+                }, function error() {
+                    $scope.username_tips = '请稍后再试';
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

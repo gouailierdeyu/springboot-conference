@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.dao.MessageDao">
+    <insert id="insert" parameterType="Message">
+        INSERT INTO message (title, message, update_time, user_email, name, paper_name)
+        VALUES (#{title}, #{message}, #{updateTime}, #{userEmail}, #{name}, #{paperName});
+    </insert>
+    <select id="selectByUserEmail" parameterType="String" resultType="Message">
+        SELECT id, title, message, update_time AS updateTime, user_email AS userEmail, name, paper_name AS paperName
+        FROM message
+        WHERE user_email = #{userEmail};
+    </select>
+    <select id="selectByPaperName" parameterType="String" resultType="Message">
+        SELECT id, title, message, update_time AS updateTime, user_email AS userEmail, name, paper_name AS paperName
+        FROM message
+        WHERE paper_name = #{paperName};
+    </select>
+    <delete id="delete" parameterType="int">
+        DELETE FROM message WHERE id = #{id};
+    </delete>
+    <update id="update" parameterType="Message">
+        UPDATE message
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="message != null">message = #{message},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="userEmail != null">user_email = #{userEmail},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="paperName != null">paper_name = #{paperName}</if>
+        </set>
+        WHERE paper_name = #{paperName};
+    </update>
+</mapper>

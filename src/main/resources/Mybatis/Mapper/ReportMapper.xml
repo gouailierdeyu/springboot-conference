@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cjf.dao.ReportDao">
+    <insert id="insert" parameterType="Report">
+        INSERT INTO report (input_key, category, insert_time, conference_name) VALUES
+        (#{inputKey}, #{category}, #{insertTime}, #{conferenceName});
+    </insert>
+    <select id="selectByConferenceName" parameterType="String" resultType="Report">
+        SELECT id, input_key AS inputKey, category, conference_name AS conferenceName
+        FROM report WHERE conference_name = #{conferenceName};
+    </select>
+    <delete id="delete" parameterType="int">
+        DELETE FROM report WHERE id = #{id};
+    </delete>
+    <update id="update" parameterType="Report">
+        UPDATE report
+        <set>
+            <if test="inputKey != null">input_key = #{inputKey},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="insertTime != null">insertTime = #{insertTime},</if>
+            <if test="conferenceName != null">conference_name = #{conferenceName}</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+</mapper>

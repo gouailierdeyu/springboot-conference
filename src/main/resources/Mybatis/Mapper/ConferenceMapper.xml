@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<mapper namespace="com.cjf.dao.ConferenceDao">-->
+<!--    <resultMap id="ConferenceResultMap" type="Conference">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="conference_name" property="conferenceName"/>-->
+<!--        <result column="start_time" property="startTime"/>-->
+<!--        <result column="end_time" property="endTime"/>-->
+<!--        <result column="field" property="field"/>-->
+<!--        <result column="address" property="address"/>-->
+<!--        <result column="image_url" property="imageUrl"/>-->
+<!--        <result column="detail" property="detail"/>-->
+<!--        <result column="user_email" property="userEmail"/>-->
+<!--        <association property="owner" column="conference_name"-->
+<!--                     select="com.cjf.dao.OwnerDao.selectByConferenceName"/>-->
+<!--        <collection property="paperList" column="conference_name"-->
+<!--                    select="com.cjf.dao.PaperDao.selectByConferenceName"/>-->
+<!--        <collection property="reportList" column="conference_name"-->
+<!--                    select="com.cjf.dao.ReportDao.selectByConferenceName"/>-->
+<!--        <collection property="reportDetailList" column="conference_name"-->
+<!--                    select="com.cjf.dao.ReportDetailDao.selectByConferenceName"/>-->
+<!--        <collection property="ticketList" column="conference_name"-->
+<!--                    select="com.cjf.dao.TicketDao.selectByConferenceName"/>-->
+<!--        <collection property="ticketDetailList" column="conference_name"-->
+<!--                    select="com.cjf.dao.TicketDetailDao.selectSumUserByConferenceName"/>-->
+<!--    </resultMap>-->
+<!--    <insert id="insert" parameterType="Conference">-->
+<!--        INSERT INTO conference -->
+<!--            (conference_name, start_time, end_time, field, address, image_url, detail, update_time, user_email, top_index, middle_index, bottom_index, myshow) VALUES-->
+<!--            (#{conferenceName}, #{startTime}, #{endTime}, #{field}, #{address}, #{imageUrl}, #{detail}, #{updateTime}, #{userEmail}, #{topIndex}, #{middleIndex}, #{bottomIndex}, #{myShow});-->
+<!--    </insert>-->
+<!--    <select id="selectByConferenceName" parameterType="String" resultType="Conference">-->
+<!--        SELECT id, conference_name AS conferenceName, start_time AS startTime, end_time AS endTime,-->
+<!--               field, address, image_url AS imageUrl, detail, user_email AS userEmail-->
+<!--        FROM conference WHERE conference_name = #{conferenceName};-->
+<!--    </select>-->
+<!--    <select id="selectByUserEmail" parameterType="String" resultType="Conference">-->
+<!--        SELECT id, conference_name AS conferenceName, start_time AS startTime, end_time AS endTime,-->
+<!--               field, address, image_url AS imageUrl, detail, user_email AS userEmail, myshow AS myShow-->
+<!--        FROM conference WHERE user_email = #{userEmail} AND myshow = 1;-->
+<!--    </select>-->
+<!--    <select id="selectWaitCheckByUserEmail" parameterType="String" resultType="Conference">-->
+<!--        SELECT id, conference_name AS conferenceName, start_time AS startTime, end_time AS endTime,-->
+<!--               field, address, image_url AS imageUrl, detail, update_time AS updateTime, user_email AS userEmail, myshow AS myShow, check_result AS checkResult-->
+<!--        FROM conference WHERE user_email = #{userEmail} AND myshow = 0;-->
+<!--    </select>-->
+<!--    <select id="selectUnPassByUserEmail" parameterType="String" resultType="Conference">-->
+<!--        SELECT id, conference_name AS conferenceName, start_time AS startTime, end_time AS endTime,-->
+<!--               field, address, image_url AS imageUrl, detail, update_time AS updateTime, user_email AS userEmail, myshow AS myShow, check_result AS checkResult-->
+<!--        FROM conference WHERE user_email = #{userEmail} AND myshow = -1;-->
+<!--    </select>-->
+<!--    <select id="selectJoinMyUser" parameterType="String" resultType="MyUser">-->
+<!--        SELECT myuser.id, myuser.user_email AS userEmail, myuser.real_name AS realName,-->
+<!--               myuser.company_name AS companyName, myuser.job-->
+<!--        FROM user_link_conference, myuser WHERE user_link_conference.conference_name = #{conferenceName}-->
+<!--                                                        AND myuser.user_email = user_link_conference.user_email AND user_link_conference.statue = 'TRADE_SUCCESS';-->
+<!--    </select>-->
+<!--    <select id="selectByTopIndex" resultType="conference">-->
+<!--        SELECT conference_name AS conferenceName, image_url AS imageUrl-->
+<!--            FROM conference WHERE myshow = 1 ORDER BY top_index DESC LIMIT 0, 5;-->
+<!--    </select>-->
+<!--    <select id="selectByMiddleIndex" resultType="conference">-->
+<!--        SELECT conference_name AS conferenceName, start_time AS startTime, address, image_url AS imageUrl-->
+<!--            FROM conference WHERE myshow = 1 ORDER BY top_index DESC LIMIT 5, 8;-->
+<!--    </select>-->
+<!--    <select id="selectByBottomIndex" resultType="conference">-->
+<!--        SELECT conference_name AS conferenceName, start_time AS startTime, address, image_url AS imageUrl-->
+<!--            FROM conference WHERE myshow = 1 ORDER BY update_time DESC LIMIT 6;-->
+<!--    </select>-->
+<!--    <select id="selectCount" resultType="int">-->
+<!--        SELECT COUNT(*) FROM conference;-->
+<!--    </select>-->
+<!--    <select id="selectConferenceDivPage" resultType="Conference" parameterType="int">-->
+<!--        SELECT conference_name AS conferenceName, myshow AS myShow, update_time AS updateTime, check_result AS checkResult FROM conference ORDER BY update_time DESC LIMIT #{flag}, 5;-->
+<!--    </select>-->
+<!--    <select id="selectBySearchKey" resultType="conference" parameterType="String">-->
+<!--        SELECT conference_name AS conferenceName, start_time AS startTime, address, image_url AS imageUrl, address, field-->
+<!--            FROM conference WHERE conference_name LIKE CONCAT('%', #{conferenceName}, '%') AND address LIKE CONCAT('%', #{address}, '%') AND field LIKE CONCAT('%', #{field}, '%') AND myshow = 1 LIMIT 0, 12;-->
+<!--    </select>-->
+<!--    <select id="selectBySearchKeyOr" resultType="conference" parameterType="String">-->
+<!--        SELECT conference_name AS conferenceName, start_time AS startTime, address, image_url AS imageUrl-->
+<!--        FROM conference WHERE conference_name LIKE CONCAT('%', #{conferenceName}, '%') OR address LIKE CONCAT('%', #{address}, '%') OR field LIKE CONCAT('%', #{field}, '%') AND myshow = 1;-->
+<!--    </select>-->
+<!--    <select id="selectByAddress" resultType="conference" parameterType="String">-->
+<!--        SELECT conference_name AS conferenceName, start_time AS startTime, end_time AS endTime, field, address, image_url AS imageUrl,-->
+<!--               detail, user_email AS userEmail FROM conference WHERE address LIKE CONCAT('%', #{address}, '%');-->
+<!--    </select>-->
+<!--    <delete id="delete" parameterType="String">-->
+<!--        DELETE FROM conference WHERE id = #{id};-->
+<!--    </delete>-->
+<!--    <update id="update" parameterType="Conference">-->
+<!--        UPDATE conference-->
+<!--        <set>-->
+<!--            <if test="conferenceName != null">conference_name = #{conferenceName},</if>-->
+<!--            <if test="startTime != null">start_time = #{startTime},</if>-->
+<!--            <if test="endTime != null">end_time = #{endTime},</if>-->
+<!--            <if test="field != null">field = #{field},</if>-->
+<!--            <if test="address != null">address = #{address},</if>-->
+<!--            <if test="imageUrl != null">image_url = #{imageUrl},</if>-->
+<!--            <if test="detail != null">detail = #{detail},</if>-->
+<!--            <if test="userEmail != null">user_email = #{userEmail},</if>-->
+<!--            <if test="topIndex != null">top_index = #{topIndex},</if>-->
+<!--            <if test="middleIndex != null">middle_index = #{middleIndex},</if>-->
+<!--            <if test="bottomIndex != null">bottom_index = #{bottomIndex},</if>-->
+<!--            <if test="myShow != null">myshow = #{myShow},</if>-->
+<!--            <if test="checkResult != null">check_result = #{checkResult}</if>-->
+<!--        </set>-->
+<!--        WHERE conference_name = #{conferenceName};-->
+<!--    </update>-->
+<!--</mapper>-->

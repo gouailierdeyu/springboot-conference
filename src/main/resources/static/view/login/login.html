@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+    <title>登录</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/modules/login/css/login.css"/>
+    <link type="favicon" rel="shortcut icon" href="/images/favicon.ico"/>
+    <script src="/script/axios.js"></script>
+    <style>
+        [v-cloak]{
+            display:none !important;
+            /*display:none !important; ///解决vue{{}}内容在页面加载时，闪烁出现*/
+        //使用v-text表示文本不会出现闪烁问题
+        }
+    </style>
+</head>
+<body>
+<section class="container" id="indexController">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="logo text-center">
+                <span class="glyphicon glyphicon-education"></span>
+                <span>会议系统</span>
+                <p>登录</p>
+            </div>
+            <form action="" class="form-horizontal" >
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 control-label">邮箱</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="username" v-model="username"/>
+                    </div>
+                    <div class="col-sm-2 text-center" id="user_email_tips" v-text="email_tips"></div>
+                </div>
+                <div class="form-group" style="">
+                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-8">
+                        <input type="password" @focus="setpassword()"  class="form-control" id="password" v-model="password"/>
+                    </div>
+                    <div class="col-sm-2 text-center" id="password_tips" v-text="password_tips"></div>
+                </div>
+                <div class="form-group" style="">
+
+                    <div class="col-sm-2" ><label for="captchaCode" class="col-sm-2 control-label"></label></div>
+                    <div class="col-sm-10">
+                        <input id="captchaCode" class="form-control col-sm-2" type="text" v-model="ipnutkactpha" style="width: 20%"  >
+                        <div class="col-sm-8" style="padding:0px;margin: 0px">
+                        <img id="changeCaptcha" style="padding: 0px" v-bind:src="kactphacode" />
+                        看不清,<a href="javascript:void(0);" v-on:click="getkactphacode()">换一张</a>{{kactphacode_tips}}
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-8">
+                        <label for="rememberMe" class="col-sm-4 control-label"></label>
+                        <input id="rememberMe" type="checkbox" v-model="rememberMe" class="pass-checkbox-input pass-checkbox-memberPass" value="true" checked="checked">
+                        <label for="rememberMe" id="TANGRAM__PSP_10__memberPassLabel" class="">下次自动登录</label>
+                    </div>
+                    <button type="button" class="btn center-block" id="login" v-on:click="loginEvent()">登录</button>
+                </div>
+            </form>
+            <div class="text-center">其他登录方式：
+                <a href="#" v-on:click="qqlogin()">
+                <img src="/images/QQ_Connect_logo_33.png">
+                </a>
+            </div>
+            <div class="link text-center">
+                <div class="col-sm-6"><a href="/index">首页</a></div>
+                <div class="col-sm-6">
+                    <span>没有账号？直接</span>
+                    <a href="/register">注册</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
+    </div>
+</section>
+<script src="/script/jquery-3.3.1.js"></script>
+<script src="/script/bootstrap.js"></script>
+<!--<script src=" /modules/login/script/login.js"></script>-->
+<script>
+    let vueapp=new Vue({
+        el:"#indexController",
+        data:{
+            username: "",
+            password: "",
+            email_tips: "",
+            password_tips: "",
+            rememberMe: "",
+            ipnutkactpha:"",
+            kactphacode:"",
+            kactphacode_tips:""
+        },
+        methods:{
+            setpassword:function(){
+                var pass=document.getElementById("password");
+                pass.type="password";
+                pass.style="";
+                this.password='';
+            },
+            loginEvent:function () {
+                if(this.username === ''){
+                    this.email_tips = '邮箱为空';
+                    setTimeout( () =>{
+                        this.email_tips = '';
+                    }, 2000);
+                    return false;
+                }
+                if(this.password === ''){
+                    var pass=document.getElementById("password");
+                    pass.type="text";
+                    pass.style="color:red";
+                    this.password='密码为空';
+                    this.password_tips = '密码为空';
+                    setTimeout( () => {
+                        this.password_tips = '';
+                    }, 2000);
+                    return false;
+                }
+                if(this.ipnutkactpha==""){
+                    this.kactphacode_tips = '验证码为空';
+                    setTimeout( () => {
+                        this.kactphacode_tips = '';
+                    }, 2000);
+                    return false;
+                } else {
+                    let data={
+                        userEmail :this.username,
+                        password :  this.password,
+                        rememberMe : this.rememberMe,
+                        inputkactpha:this.ipnutkactpha
+                    };
+                  //  data=JSON.stringify(data);
+                   // console.log(data);
+                    let _this=this;
+                    axios.post(
+                        "/checkMyUser",{data}).then(function (response) {
+                            if(response.data.message === "ok"){
+                                sessionStorage.setItem('userEmail', _this.username);
+                                window.location.href = '/index';
+                            }
+                            else{
+                                if(response.data.message === "用户不存在"){
+                                    _this.email_tips = '账号不存在';
+                                    setTimeout( ()=> {
+                                        _this.email_tips = '';
+                                    }, 2000);
+                                    axios.get("/kactpha").then( (response)=> {
+                                        _this.kactphacode="data:image/jpeg;base64,"+response.data;
+                                    });
+                                }else if(response.data.message === "密码错误"){
+                                    _this.password_tips = '密码错误';
+                                    setTimeout( ()=> {
+                                        _this.password_tips = '';
+                                    }, 2000);
+                                    axios.get("/kactpha").then( (response)=> {
+                                        _this.kactphacode="data:image/jpeg;base64,"+response.data;
+                                    });
+                                }else if(response.data.message === "验证码错误"){
+                                    _this.kactphacode_tips = '验证码错误';
+                                    setTimeout( ()=> {
+                                        _this.kactphacode_tips = '';
+                                    }, 2000);
+                                    axios.get("/kactpha").then( (response)=> {
+                                        _this.kactphacode="data:image/jpeg;base64,"+response.data;
+                                    });
+                                }
+                            }
+                        }
+                    ).catch(function (error) {
+                        _this.email_tips = '请稍后再试';
+                    });
+                }
+            },
+            getkactphacode:function () {
+                axios.get("/kactpha").then( (response)=> {
+                    this.kactphacode="data:image/jpeg;base64,"+response.data;
+                });
+            },
+            qqlogin:function() {
+                axios.get("/qqappid").then((response)=>{
+                    let qqapp=response.data.data;
+                    let qqappid=qqapp.thirdAppId;
+                    let callback=encodeURIComponent(qqapp.callback);
+                    let url="https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id="+qqappid+"&redirect_uri="+callback+"&state=2";
+                    let iTop = (window.screen.availHeight - 30 - 400) / 2;
+                    //获得窗口的水平位置
+                    let iLeft = (window.screen.availWidth - 10 - 500) / 2;
+                    window.open(url,"_self", "width=500,height=400,menubar=0,scrollbars=1,resizable=1,status=1,titlebar=0,toolbar=0,location=1"+",top="+iTop+",left="+iLeft);
+                }).catch(function () {
+
+                });
+            }
+        },
+        created:function () {
+            let vueapp=this;
+            axios.get("/kactpha").then( (response)=> {
+                vueapp.kactphacode="data:image/jpeg;base64,"+response.data;
+
+            });
+        }
+    });
+
+</script>
+</body>
+</html>
