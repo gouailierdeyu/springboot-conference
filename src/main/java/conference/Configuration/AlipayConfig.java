@@ -1,0 +1,24 @@
+package conference.Configuration;
+
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+
+/**
+ * UTF-8
+ * Created by czy  Time : 2020-03-25 19:48
+ *
+ * @version 1.0
+ */
+public class AlipayConfig {
+    public static final String  URL="https://openapi.alipaydev.com/gateway.do";
+
+    public static final String APP_ID="2016101900722502";
+    public static final String APP_PRIVATE_KEY="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCb1jvfDm/wlhRPt4g9K+DYCKpXkw3oRy35sNCmPgsl29r6VTdxBgvW2LMfao9/CHcvjowQacOKCr86cmxp2/ODnNy7tOBy74dFnAxvxPtIsqkKbMhnzoDSUc+MOJfQ/f2t5AAkriGxRbohPf5mTQ47/rxfh4XdcvWFyXMVG4EzpzFzT1hqTGyVUfcaYZ3DmY0ozre0XlQSerQmAdgmXJc5D89QYf8PxReHCWexvXW8rIcm2Gp501dzV0GChKn0S5hX5cLD98GCULSeADlvCfqupQ1QxCxOH8i90DL1L3KjQZctYpa17nWY04zUdeJnTR8DsANlOQjb6cluEtsIYIajAgMBAAECggEAA9GeKfsqlxS2brWqqwUWP3UG55p87sI/yCyjEE/Y6haXKSdJcoWZaKxqx0xPM+e7M/kkSYqt9gYJZZ9ENNvk/casShVGospn4DbQvzRui/uE1PKRfqm60myaz27bmY1/1/EMZ9m0jamNxB7Gyy78OFAnwZeKmkCk76BeJ5hC9EcMuHLlex8R20ZIhapFxpyfVe4Q98FizKGfKjk/3OIq9rU5kgBWY6l7PvQLdCjmMotcSd0V52mU8TYUrOUgQeLflLH0ou+h/Rp7FPyxeg1xSvDgP12FaBb988MRufg4sPTV4L+LXGhQDm/IOpExnfr8gpTP62f9T/2+I/6C/yokwQKBgQDkeBVx6Sw7XytipH+WbFIEyW09gm/ro6vZGikUoR/aZVc+Hc04vT+3tTFktEVloVOn87h/qcOtWCWOTPLT32sbn0fOKow4oeyvicDZi0itg3NE0PhYhooad2i+a3IIAIPbfmdtFRTTGytECMgYKL1zMaCkPfLguBJtSRGqsXYa8wKBgQCunY8IS3qTqs+UJl+6DJ2eSDQQYWBzlpdqiG7oKWqreNTlfD1cKRjWBuDfkfnCaD/fUsk9TcCLX+SRQqwdA3sxO7g0N9KuDy4cwWTraDswakp14/AMRSFPeEspxa73Cm2UiXRKeQ01BX5qNuOje1tPHgslu9n3r081nHPM7JJxkQKBgHCGTFmcNDLRvraIumZF12eQJYOD+MegBwWYgt8sNFoGS5/GYcsuOnGqhjdJKlzRxjgUK6yE2mFH5sddUsPTaBdkraL3BbTm24HhYOBEX3lGIsGkAoznRqGeajJPDQyv5EF40kvBdE49NWP+xz5O4nAX4zzBXhwbzMeSk2b0nGzNAoGAQYMDgs0us/BF6QNsrtTE3fmg7vRZx4QcUu/VDG1dg+/VkDPIoacZllMGU1rlJbcPH65jqghd0OytSIKHKGuB8LrDJXQ8KumvF0LHpjp42nVGcmyOR0w4byRmrsloF29mJXBcnQRFnDrvbtIhHdjOLSTMcd/Eq1SulyKXn66yUsECgYEAsnCp9FXvxizvFPlMzeH1QMsuJWJsKh75XLD6RDJI5brKPcPW8aKH9MyNhjupLTyDww9gMDubFQmGZeUNO55GGGrx4aNK/tV/XnGoszyh/4xweBCF4tLqSs4fB2UhHIAZDFUqm+mdoh6Bls5Udrwrswvp0d7SuswxEB2oddjTvWM=";
+    public static final String FORMAT="json";
+    public static final String CHARSET="utf-8";
+    public static final String ALIPAY_PUBLIC_KEY="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIgHnOn7LLILlKETd6BFRJ0GqgS2Y3mn1wMQmyh9zEyWlz5p1zrahRahbXAfCfSqshSNfqOmAQzSHRVjCqjsAw1jyqrXaPdKBmr90DIpIxmIyKXv4GGAkPyJ/6FTFY99uhpiq0qadD/uSzQsefWo0aTvP/65zi3eof7TcZ32oWpwIDAQAB";
+    public static final String SIGN_TYPE="RSA";
+
+    public static final AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.URL,AlipayConfig.APP_ID,AlipayConfig.APP_PRIVATE_KEY,AlipayConfig.FORMAT,AlipayConfig.CHARSET,AlipayConfig.ALIPAY_PUBLIC_KEY,AlipayConfig.SIGN_TYPE);
+
+}
