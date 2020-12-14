@@ -9,5 +9,8 @@
         <package name="conference.DAO.ORM"/>
 
     </typeAliases>
+    <typeHandlers>
+        
+    </typeHandlers>
 
 </configuration>

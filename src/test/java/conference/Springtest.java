@@ -1,5 +1,6 @@
 package conference;
 
+import conference.property.MpProperty;
 import conference.services.MyUserService;
 import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.apache.tomcat.util.descriptor.web.MessageDestinationRef;
@@ -8,10 +9,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
@@ -33,10 +37,11 @@ public class Springtest {
     MyUserService myUserService;
 
 	@Autowired
-	StringRedisTemplate redisTemplate;
+	StringRedisTemplate stringRedisTemplate;
 
 	@Autowired
-	RedisTemplate<String,Object> template;
+	RedisTemplate<String,Object> objectTemplate;
+
 
     @Before
     public void willdo(){
@@ -56,14 +61,27 @@ public class Springtest {
 
     }
 
+    // StringRedisTemplate 和 RedisTemplate<String,Object> 对同一个key操作时，出现问题？
     @Test
 	public void testredis(){
-		redisTemplate.opsForValue().set("rao", "2");
-		System.out.println(redisTemplate.opsForValue().get("rao"));
-		template.opsForValue().set("czy", 2);
-		template.delete("czy");
-		System.out.println(template.opsForValue().get("czy"));
+		stringRedisTemplate.opsForValue().set("rao", "stringrao");
+		System.out.println(stringRedisTemplate.opsForValue().get("rao"));
+		objectTemplate.opsForValue().set("czy", "objectczy");
+		objectTemplate.opsForValue().set("rao","objectrao");
+		stringRedisTemplate.opsForValue().set("czy","stringczy");
+		stringRedisTemplate.opsForList().leftPush("lst","sss");
+		stringRedisTemplate.opsForList().leftPush("lst","eee");
+		stringRedisTemplate.opsForList().rightPush("lst","wett");
+		objectTemplate.opsForList().rightPush("lst","wsn");
 
+    }
+
+	@Test
+	public void testgetFromRedis(){
+		System.out.println(stringRedisTemplate.opsForValue().get("czy"));
+		System.out.println(stringRedisTemplate.opsForValue().get("rao"));
+		System.out.println(objectTemplate.opsForValue().get("czy"));
+		System.out.println(objectTemplate.opsForValue().get("rao"));
 	}
 
 	@Test

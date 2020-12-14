@@ -7,6 +7,7 @@ import org.junit.runners.BlockJUnit4ClassRunner;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
 
 @RunWith(BlockJUnit4ClassRunner.class)
 public class Java8TimeTest {
@@ -32,5 +33,15 @@ public class Java8TimeTest {
         System.out.println("执行毫秒："+(Clock.systemUTC().millis()-clock.millis()));
         System.out.println("执行纳秒："+(LocalTime.now().getNano()-localTime.getNano()));
 
+    }
+
+    @Test
+    public void testweek(){
+        LocalDate localDate=LocalDate.of(2020,12,31);
+        System.out.println(localDate.getDayOfWeek());
+
+        LocalDate enddate=localDate.plusDays(1);
+        System.out.println(enddate);
+        System.out.println(enddate.getDayOfWeek());
     }
 }

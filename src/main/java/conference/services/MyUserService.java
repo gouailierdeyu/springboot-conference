@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * UTF-8
  * Created by CZY    Time : 2019/7/6 20:45
@@ -92,6 +95,30 @@ public class MyUserService  {
     public void doUpdateMyUser(MyUser myUser){
        myUserMapper.update(myUser);
 
+    }
+
+    public Set<String> getRolesByUserName(String username){
+        Set<String> strings=new HashSet<>();
+        if(username.equals("user")){
+            strings.add("user");
+            return  strings;
+        }else  if(username.equals("admin")){
+            strings.add("admin");
+            return  strings;
+        }
+        return null;
+    }
+
+    public Set<String> getPermissionsByUserName(String username){
+        Set<String> strings=new HashSet<>();
+        if(username.equals("user")){
+            strings.add("user");
+            return  strings;
+        }else  if(username.equals("admin")){
+            strings.add("admin");
+            return  strings;
+        }
+        return null;
     }
 
 

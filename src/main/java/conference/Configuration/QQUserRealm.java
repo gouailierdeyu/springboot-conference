@@ -15,15 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  * UTF-8
  * Created by CZY    Time : 2019/9/30 9:38
  */
+
+//继承AuthorizingRealm就既有Authorization的api 也有Authentication的api .
 public class QQUserRealm extends AuthorizingRealm {
 
     @Autowired
     MyUserService myUserService;
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
-    }
-
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         AllUserToken token=(AllUserToken)authenticationToken;
@@ -37,4 +34,11 @@ public class QQUserRealm extends AuthorizingRealm {
             return null;
         }
     }
+
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        return null;
+    }
+
+
 }

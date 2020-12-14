@@ -2,6 +2,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
+import java.util.ArrayList;
+
 /**
  * UTF-8
  * Created by czy  Time : 2020/2/11 17:48
@@ -17,6 +19,12 @@ public class java8String {
         String str2 = str1 + " a nice day";
         System.out.println("what a nice day".equals(str2));
         System.out.println("what a nice day" == str2);
+        Class<?> class1=new ArrayList<String>().getClass();
+        Class<?> class2=new ArrayList<Integer>().getClass();
+        System.out.println(class1);		//class java.util.ArrayList
+        System.out.println(class2);		//class java.util.ArrayList
+        System.out.println(class1==class2);	//true
+
     }
     /**
      * 以下程序输出的结果是什么？

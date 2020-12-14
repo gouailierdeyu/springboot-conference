@@ -14,6 +14,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.filter.authz.PortFilter;
+import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -50,19 +52,21 @@ public class LoginPageCtrl {
 
     @PostMapping("/checkMyUser")
     @ResponseBody
-    public ResultSet<MyUser> checkMyUser(@RequestBody Map<Object,Object> map ){
+    public ResultSet<String> checkMyUser(@RequestBody Map<Object,Object> map ){
         map=(Map<Object, Object>) map.get("data");
         String userEmail=(String) map.get("userEmail");
         String password=(String) map.get("password");
-        String rememberMe=(String) map.get("rememberMe");
+        String rememberMe=String.valueOf( map.get("rememberMe"));
         String inputkactpha=(String) map.get("inputkactpha");
         Subject subject= SecurityUtils.getSubject();
+
+        System.out.println(userEmail+password+rememberMe+inputkactpha);
         AllUserToken token=new AllUserToken(userEmail,password,inputkactpha, UserType.ME);
-        boolean rbm=rememberMe==""?false:true;
+        boolean rbm=rememberMe.equals("")?false:true;
         token.setRememberMe(rbm);
         try {
             subject.login(token);
-            return new ResultSet(200,"ok", null);
+            return new ResultSet(200,"登录成功", null);
         }catch (KaptchaErrorException e){
             return new ResultSet(200,"验证码错误", null);
         }catch (UnknownAccountException e){

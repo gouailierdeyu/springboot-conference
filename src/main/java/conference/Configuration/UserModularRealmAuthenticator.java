@@ -30,12 +30,12 @@ public class UserModularRealmAuthenticator extends ModularRealmAuthenticator {
             typeSting="QQUserRealm";
         }
 
-
-
         Collection<Realm> typeRealms = new ArrayList<>();
         for (Realm realm : realms) {
-            if (realm.getName().contains(typeSting)) // 注：这里使用类名包含枚举，区分realm
+            if(realm.getName().contains(typeSting)) // 注：这里使用类名包含枚举，区分realm
+            {
                 typeRealms.add(realm);
+            }
         }
         // 判断是单Realm还是多Realm
 

@@ -1,0 +1,69 @@
+
+#四川大学疫情防控日报
+POST https://wfw.scu.edu.cn/ncov/wap/default/save HTTP/1.1
+Host: wfw.scu.edu.cn
+Connection: keep-alive
+Accept: application/json, text/javascript, */*; q=0.01
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.59 Safari/537.36 Edg/85.0.564.30
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Origin: https://wfw.scu.edu.cn
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://wfw.scu.edu.cn/ncov/wap/default/index
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en,zh-CN;q=0.9,zh;q=0.8
+Cookie: UUkey=2cbefc5ec863d01e25f0c3a371402264; Hm_lvt_2e88d233d03344ea0ae8e272f7a488aa=1585755374; UM_distinctid=1720bc1b04946c-00f45930ca6635-5f35194e-149c48-1720bc1b04a9d0; eai-sess=qd1pb7mb6oeabl550l63lvagt6; Hm_lvt_48b682d4885d22a90111e46b972e3268=1597200590,1597284559,1597627723; Hm_lpvt_48b682d4885d22a90111e46b972e3268=1597627723
+
+sfjxhsjc=0&hsjcrq=&hsjcdd=&hsjcjg=0&zgfxdq=0&mjry=0&csmjry=0&szxqmc=&tw=3&sfcxtz=0&sfjcbh=0&sfcxzysx=0&qksm=&sfyyjc=0&jcjgqr=0&remark=%E5%9C%A8%E6%A0%A1%E4%BA%86&address=%E5%9B%9B%E5%B7%9D%E7%9C%81%E6%88%90%E9%83%BD%E5%B8%82%E6%AD%A6%E4%BE%AF%E5%8C%BA%E8%B7%B3%E4%BC%9E%E5%A1%94%E8%A1%97%E9%81%93%E5%A4%A7%E5%AD%A6%E8%B7%AF1%E5%8F%B7%E9%99%A2%E5%9B%9B%E5%B7%9D%E5%A4%A7%E5%AD%A6%E5%8D%8E%E8%A5%BF%E6%A0%A1%E5%8C%BA%E4%B8%9C%E5%8C%BA&geo_api_info=%7B%22type%22%3A%22complete%22%2C%22info%22%3A%22SUCCESS%22%2C%22status%22%3A1%2C%22VDa%22%3A%22jsonp_357088_%22%2C%22position%22%3A%7B%22Q%22%3A30.64133%2C%22R%22%3A104.07152000000002%2C%22lng%22%3A104.07152%2C%22lat%22%3A30.64133%7D%2C%22message%22%3A%22Get+ipLocation+success.Get+address+success.%22%2C%22location_type%22%3A%22ip%22%2C%22accuracy%22%3Anull%2C%22isConverted%22%3Atrue%2C%22addressComponent%22%3A%7B%22citycode%22%3A%22028%22%2C%22adcode%22%3A%22510107%22%2C%22businessAreas%22%3A%5B%7B%22name%22%3A%22%E5%B0%8F%E5%A4%A9%E7%AB%BA%22%2C%22id%22%3A%22510107%22%2C%22location%22%3A%7B%22Q%22%3A30.639354%2C%22R%22%3A104.06894199999999%2C%22lng%22%3A104.068942%2C%22lat%22%3A30.639354%7D%7D%2C%7B%22name%22%3A%22%E8%B7%B3%E4%BC%9E%E5%A1%94%22%2C%22id%22%3A%22510107%22%2C%22location%22%3A%7B%22Q%22%3A30.636149%2C%22R%22%3A104.07122400000003%2C%22lng%22%3A104.071224%2C%22lat%22%3A30.636149%7D%7D%5D%2C%22neighborhoodType%22%3A%22%E5%95%86%E5%8A%A1%E4%BD%8F%E5%AE%85%3B%E4%BD%8F%E5%AE%85%E5%8C%BA%3B%E4%BD%8F%E5%AE%85%E5%B0%8F%E5%8C%BA%22%2C%22neighborhood%22%3A%22%E5%A4%A7%E5%AD%A6%E8%B7%AF1%E5%8F%B7%E9%99%A2%22%2C%22building%22%3A%22%22%2C%22buildingType%22%3A%22%22%2C%22street%22%3A%22%E5%A4%A7%E5%AD%A6%E8%B7%AF%22%2C%22streetNumber%22%3A%221%E5%8F%B7%E9%99%A2%22%2C%22country%22%3A%22%E4%B8%AD%E5%9B%BD%22%2C%22province%22%3A%22%E5%9B%9B%E5%B7%9D%E7%9C%81%22%2C%22city%22%3A%22%E6%88%90%E9%83%BD%E5%B8%82%22%2C%22district%22%3A%22%E6%AD%A6%E4%BE%AF%E5%8C%BA%22%2C%22township%22%3A%22%E8%B7%B3%E4%BC%9E%E5%A1%94%E8%A1%97%E9%81%93%22%7D%2C%22formattedAddress%22%3A%22%E5%9B%9B%E5%B7%9D%E7%9C%81%E6%88%90%E9%83%BD%E5%B8%82%E6%AD%A6%E4%BE%AF%E5%8C%BA%E8%B7%B3%E4%BC%9E%E5%A1%94%E8%A1%97%E9%81%93%E5%A4%A7%E5%AD%A6%E8%B7%AF1%E5%8F%B7%E9%99%A2%E5%9B%9B%E5%B7%9D%E5%A4%A7%E5%AD%A6%E5%8D%8E%E8%A5%BF%E6%A0%A1%E5%8C%BA%E4%B8%9C%E5%8C%BA%22%2C%22roads%22%3A%5B%5D%2C%22crosses%22%3A%5B%5D%2C%22pois%22%3A%5B%5D%7D&area=%E5%9B%9B%E5%B7%9D%E7%9C%81+%E6%88%90%E9%83%BD%E5%B8%82+%E6%AD%A6%E4%BE%AF%E5%8C%BA&province=%E5%9B%9B%E5%B7%9D%E7%9C%81&city=%E6%88%90%E9%83%BD%E5%B8%82&sfzx=0&sfjcwhry=0&sfjchbry=0&sfcyglq=0&gllx=&glksrq=&jcbhlx=&jcbhrq=&bztcyy=1&sftjhb=0&sftjwh=0&jcjg=&uid=148885&created=1597107678&date=20200811&jcqzrq=&sfjcqz=&szsqsfybl=0&sfsqhzjkk=0&sqhzjkkys=&sfygtjzzfj=0&gtjzzfjsj=&szcs=&szgj=&id=13019843&gwszdd=&sfyqjzgc=&jrsfqzys=&jrsfqzfy=&szgjcs=&ismoved=0
+
+###
+
+#两个时段
+POST http://report.wsn2019.club/report HTTP/1.1
+Host: report.wsn2019.club
+Proxy-Connection: keep-alive
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 QBCore/4.0.1301.400 QQBrowser/9.0.2524.400 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2875.116 Safari/537.36 NetType/WIFI MicroMessenger/7.0.5 WindowsWechat
+Origin: http://www.wsn2019.club
+Authorization: 76k0DNZxSHDpCyBY3aADGOjFZuQBaS1Y+uX8IJv+w/+d7XFz/w2O/wSdQp3vPYob5F5Rt5a+TZZB6pqNFStdBg==
+Content-Type: application/json;charset=UTF-8
+Accept: */*
+Referer: http://www.wsn2019.club/addReport
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.5;q=0.4
+
+{"impression":"","target":"阅读论文","date":"2020-08-23","place":"四川省成都市武侯区","activities":[{"startTime":"14:10","endTime":"17:30","type":0,"content":"组会学习论文和前端模拟数据框架mockjs，学习图信号处理的描述","imgSrc":""},{"startTime":"19:30","endTime":"22:40","type":0,"content":"项目内容和算法讨论学习","imgSrc":""}]}
+
+
+###一个时段
+POST http://report.wsn2019.club/report HTTP/1.1
+Host:  report.wsn2019.club
+Proxy-Connection: keep-alive
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 QBCore/4.0.1301.400 QQBrowser/9.0.2524.400 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2875.116 Safari/537.36 NetType/WIFI MicroMessenger/7.0.5 WindowsWechat
+Origin: http://www.wsn2019.club
+Authorization: 76k0DNZxSHDpCyBY3aADGKnaun15dP9ZonJC3kjBq1Wd7XFz/w2O/wSdQp3vPYob5F5Rt5a+TZZB6pqNFStdBg==
+Content-Type: application/json;charset=UTF-8
+Accept: */*
+Referer: http://www.wsn2019.club/addReport
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.5;q=0.4
+
+{"impression":"","target":"阅读论文，组会","date":"2020-08-22","place":"四川省成都市武侯区","activities":[{"startTime":"14:00","endTime":"18:00","type":0,"content":"休息","imgSrc":""}]}
+
+
+### 三个时段
+POST http://report.wsn2019.club/report HTTP/1.1
+Host: report.wsn2019.club
+Proxy-Connection: keep-alive
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 QBCore/4.0.1301.400 QQBrowser/9.0.2524.400 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2875.116 Safari/537.36 NetType/WIFI MicroMessenger/7.0.5 WindowsWechat
+Origin: http://www.wsn2019.club
+Authorization: 76k0DNZxSHDpCyBY3aADGHOzcXNPl85nU1rIeV0MfA6d7XFz/w2O/wSdQp3vPYob5F5Rt5a+TZZB6pqNFStdBg==
+Content-Type: application/json;charset=UTF-8
+Accept: */*
+Referer: http://www.wsn2019.club/addReport
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.5;q=0.4
+
+{"impression":"","target":"编写计划书","date":"2020-09-03","place":"四川省成都市武侯区","activities":[{"startTime":"14:00","endTime":"17:45","type":0,"content":"学习负荷分解论文的代码，继续修改学习模型跑模型，调试","imgSrc":""},{"startTime":"19:30","endTime":"22:00","type":0,"content":"阅读之前的商业计划书，并修改为目前需要的版本","imgSrc":""},{"startTime":"09:20","endTime":"11:45","type":0,"content":"阅读论文的代码，尝试自己复现并修改，然后调试","imgSrc":""}]}
+

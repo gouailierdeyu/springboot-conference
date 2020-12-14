@@ -15,6 +15,7 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import javax.servlet.Filter;
 import java.util.*;
@@ -30,7 +31,8 @@ public class ShiroConfing  {
      * shiro过滤bean
      */
     @Bean
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(
+            @Qualifier("securityManager") DefaultWebSecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         // 设置安全管理器
@@ -64,23 +66,20 @@ public class ShiroConfing  {
            ssl:表示安全的url请求，协议为https
            user:当登入操作时不做检查
          */
-         filerMap.put("/script/**", "anon");
-         filerMap.put("/images/**", "anon");
+        filerMap.put("/script/**", "anon");
+        filerMap.put("/images/**", "anon");
         filerMap.put("/index","anon");
         filerMap.put("/register","anon");
         filerMap.put("/insertMyUser","anon");
         filerMap.put("/login","anon");
         filerMap.put("/checkMyUser","anon");
         filerMap.put("/account/**","authc");
-        filerMap.put("/**","anon");
-
-
+       // filerMap.put("/**","anon");
 
         //授权过滤器
-//        filerMap.put("/add","perms[user:add]");
-//        filerMap.put("/update","perms[user:update]");
-//        filerMap.put("/**","user");
-
+//      filerMap.put("/add","perms[user:add]");
+//      filerMap.put("/update","perms[user:update]");
+        filerMap.put("/html/admin", "authc,roles[admin]");
 
         //设置登录的页面，发送toLogin请求
         shiroFilterFactoryBean.setLoginUrl("/login");
@@ -96,7 +95,10 @@ public class ShiroConfing  {
      * 创建DefaultWebSecurityManager
      */
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("authenticator") ModularRealmAuthenticator authenticator, @Qualifier("qquserRealm") QQUserRealm qqUserRealm,@Qualifier("userRealm") MyUserRealm userRealm,@Qualifier("rememberMeManager") RememberMeManager rememberMeManager ){
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(
+    @Qualifier("authenticator") ModularRealmAuthenticator authenticator,
+    @Qualifier("qquserRealm") QQUserRealm qqUserRealm,@Qualifier("userRealm") MyUserRealm userRealm,
+    @Qualifier("rememberMeManager") RememberMeManager rememberMeManager ){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 关联多个realm
         Collection<Realm> realms=new ArrayList<>();
