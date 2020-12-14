@@ -7,6 +7,6 @@
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="Graal11" project-jdk-type="JavaSDK" />
   <component name="jetbrains.communicator.idea.IdProvider" IDEtalkID="7505847A4EC7AA6C8690A94834E4FF7F" />
 </project>
