@@ -3,8 +3,12 @@ package conference;
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -21,6 +25,7 @@ import java.util.*;
 @EnableSwagger2
 public class ProStart {
     public static void main(String[] args) {
+
         SpringApplication.run(ProStart.class,args);
 //        Jedis jedis = new Jedis("localhost");
 //        System.out.println("连接成功");
