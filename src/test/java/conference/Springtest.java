@@ -1,21 +1,14 @@
 package conference;
 
-import conference.property.MpProperty;
-import conference.services.MyUserService;
-import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
-import org.apache.tomcat.util.descriptor.web.MessageDestinationRef;
+import conference.service.MyUserService;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import conference.Configuration.AllUserToken;
 import conference.Configuration.UserType;
-import conference.services.MyUserService;
+import conference.service.MyUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;

@@ -1,7 +1,7 @@
 package conference.Configuration;
 
 import conference.DAO.ORM.MyUser;
-import conference.services.MyUserService;
+import conference.service.MyUserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -36,9 +37,6 @@ public class ProStart {
       //  Father father=new Sun();
 //        System.out.println("dfhvdhv");
 //        Sun sun=new Sun();
-
-
-
     }
 }
 //

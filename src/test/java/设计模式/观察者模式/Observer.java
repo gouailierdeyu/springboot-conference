@@ -6,7 +6,11 @@ package 设计模式.观察者模式;
  *
  * @version 1.0
  */
-public interface Observer {
 
-    <T> void update(Subject<T> subject) ;
+/**
+ * 观察者，接受目标发出的消息
+ */
+public interface Observer<T> {
+
+     void update(Subject<T> subject) ;
 }

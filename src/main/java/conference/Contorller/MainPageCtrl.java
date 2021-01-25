@@ -2,18 +2,15 @@ package conference.Contorller;
 
 import conference.DAO.ORM.MyUser;
 import conference.Utils.ResultSet;
-import conference.services.ConferenceService;
-import conference.services.MyUserService;
+import conference.service.ConferenceService;
+import conference.service.MyUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * UTF-8
@@ -78,7 +75,7 @@ public class MainPageCtrl {
     @GetMapping(value = "/getMyUser")
     @ResponseBody
     public ResultSet<MyUser> getMyUser(String userEmail){
-        
+
         return myUserService.doCheckMyUser(userEmail);
     }
 

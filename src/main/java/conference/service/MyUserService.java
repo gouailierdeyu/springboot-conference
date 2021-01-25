@@ -1,7 +1,5 @@
-package conference.services;
+package conference.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.IService;
 import conference.DAO.Mapper.MyUserMapper;
 import conference.DAO.ORM.MyUser;
 import conference.Utils.ResultSet;

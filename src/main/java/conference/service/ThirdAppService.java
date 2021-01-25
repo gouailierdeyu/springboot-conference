@@ -1,4 +1,4 @@
-package conference.services;
+package conference.service;
 
 import conference.DAO.Mapper.ThirdAppMapper;
 import conference.DAO.ORM.ThirdApp;

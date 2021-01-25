@@ -1,9 +1,7 @@
 package conference.Configuration;
 
 import conference.DAO.ORM.MyUser;
-import conference.MyException.KaptchaErrorException;
-import conference.services.MyUserService;
-import org.apache.shiro.SecurityUtils;
+import conference.service.MyUserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -13,7 +11,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Set;
 

@@ -8,8 +8,9 @@ package 设计模式.观察者模式;
  */
 public class Main {
     public static void main(String[] args) {
-        TestSubject sub = new TestSubject("测试目标");
+        Subject<Object> sub = new TestSubject("测试目标");
         sub.attach(new TestObserver());
+        sub.attach(new TestObserver2());
         sub.setMes(8);
     }
 }

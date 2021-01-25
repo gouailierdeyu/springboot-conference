@@ -6,10 +6,10 @@ package 设计模式.观察者模式;
  *
  * @version 1.0
  */
-public class TestObserver implements Observer{
+public class TestObserver implements Observer<Object>{
 
     @Override
-    public <T> void update(Subject<T> subject) {
-        System.out.println("收到 "+subject.getSubjectName()+" 的信息更新，请处理");
+    public  void update(Subject<Object> subject) {
+        System.out.println("1收到 "+subject.getSubjectName()+" 的信息更新，请处理");
     }
 }

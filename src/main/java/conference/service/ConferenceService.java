@@ -1,4 +1,4 @@
-package conference.services;
+package conference.service;
 
 import conference.DAO.Mapper.ConferenceMapper;
 import conference.DAO.ORM.Conference;
