@@ -1,6 +1,5 @@
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,6 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-@RunWith(BlockJUnit4ClassRunner.class)
 public class java8String {
 
     @Test

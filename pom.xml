@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.11.RELEASE</version>
+        <version>2.4.2</version>
     </parent>
     <dependencies>
         <dependency>
@@ -33,11 +33,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.12</version>
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -58,10 +53,15 @@
             <version>1.2.2</version>
         </dependency>
 
+        <!--  支付api包括微信支付和支付宝api-->
+<!--        已经包含
+apache.httpcomponents依赖
+fastjson
+-->
         <dependency>
             <groupId>cn.felord</groupId>
             <artifactId>payment-spring-boot-starter</artifactId>
-            <version>1.0.1.RELEASE</version>
+            <version>1.0.6.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -69,27 +69,14 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-<!--        Swagger2依赖-->
-        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+<!--        Swagger3和knife4j3 openapi3依赖-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>2.0.1</version>
+            <!--在引用时请在maven中央仓库搜索3.X最新版本号-->
+            <version>3.0.2</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.47</version>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
@@ -98,11 +85,17 @@
             <version>42.2.9</version>
         </dependency>
 
+<!--        mybatis-plus-->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.1</version>
+            <version>3.4.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
 
@@ -111,15 +104,6 @@
             <artifactId>shiro-spring</artifactId>
             <version>1.4.1</version>
         </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.62</version>
-        </dependency>
-
 
         <dependency>
             <groupId>com.oopsguy.kaptcha</groupId>
@@ -131,16 +115,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-
-<!--        支付宝api-->
-        <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
-        <dependency>
-            <groupId>com.alipay.sdk</groupId>
-            <artifactId>alipay-sdk-java</artifactId>
-            <version>4.9.79.ALL</version>
-        </dependency>
-
-
     </dependencies>
 
     <build>

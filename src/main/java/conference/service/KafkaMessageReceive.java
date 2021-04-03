@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class KafkaMessageReceive {
     @KafkaListener(topics = {"testTopic"},groupId = "czy")
     public void receiveMessage(ConsumerRecord<String,String> consumerRecord ){
+        System.out.println("1=== thread id "+Thread.currentThread().getId());
         System.out.println("1=== topic "+ consumerRecord.topic());
         System.out.println("1=== key "+consumerRecord.key());
         System.out.println("1=== value "+consumerRecord.value());
@@ -27,10 +28,25 @@ public class KafkaMessageReceive {
 
     @KafkaListener(topics = {"testTopic"},groupId = "czy2")
     public void receiveMessage2(ConsumerRecord<String,String> consumerRecord){
+        System.out.println("2=== thread id "+Thread.currentThread().getId());
         System.out.println("2=== topic "+ consumerRecord.topic());
         System.out.println("2=== key "+consumerRecord.key());
         System.out.println("2=== value "+consumerRecord.value());
         System.out.println("2=== "+consumerRecord);
+    }
+
+    @KafkaListener(topics = {"testTopic"},groupId = "czy3")
+    public void receiveMessage3(ConsumerRecord<String,String> consumerRecord){
+        if (WebSocketService.clients!=null && !WebSocketService.clients.isEmpty()){
+            WebSocketService.clients.forEach((key ,value)->{
+                        value.sendMessage(consumerRecord.value());
+            });
+        }
+        System.out.println("3=== thread id "+Thread.currentThread().getId());
+        System.out.println("3=== topic "+ consumerRecord.topic());
+        System.out.println("3=== key "+consumerRecord.key());
+        System.out.println("3=== value "+consumerRecord.value());
+        System.out.println("3=== "+consumerRecord);
     }
 
 }

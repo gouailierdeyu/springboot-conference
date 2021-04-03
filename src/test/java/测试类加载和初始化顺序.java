@@ -1,3 +1,5 @@
+import org.springframework.boot.autoconfigure.cache.CacheType;
+
 /**
  * UTF-8
  * Created by czy  Time : 2021/1/18 16:18

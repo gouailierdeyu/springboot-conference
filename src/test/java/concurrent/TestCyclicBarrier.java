@@ -16,7 +16,7 @@ import java.util.concurrent.CyclicBarrier;
  * CyclicBarrier(int parties, Runnable barrierAction)
  * parties代表一起参与的线程数，barrierAction表示最后一个线程执行到await()之前要调用的线程。
  * 当一起参与的线程数都达到 await() 后，CyclicBarrier可以循环利用，重置为设置的parties,继续过程
- * 如设置为parties为1，如果有2个线程用了 await()，那么据说一个线程到 await，就直接通过屏障 执行完，之后，下一个线程再执行。
+ * 如设置为parties为1，如果有2个线程用了 await()，那么一个线程到 await，就直接通过屏障 执行完，之后，下一个线程再执行。
  * 如果调用 await() 的线程数量少于设置的 parties，那么程序会一直等待着，不能通过屏障。
  */
 public class TestCyclicBarrier {

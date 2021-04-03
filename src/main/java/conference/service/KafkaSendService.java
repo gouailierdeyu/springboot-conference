@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.FileInputStream;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 /**
@@ -27,7 +31,6 @@ public class KafkaSendService {
     KafkaTemplate<String,String> stringKafkaTemplate;
 
     public int sendMessage(Object v) throws JsonProcessingException {
-
         String mess = new ObjectMapper().writeValueAsString(v);
         ListenableFuture<SendResult<String, String>> testTopic = stringKafkaTemplate.send("testTopic", "warning",mess);
         testTopic.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {

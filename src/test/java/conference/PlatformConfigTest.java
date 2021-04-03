@@ -1,7 +1,6 @@
 package conference;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
@@ -14,21 +13,21 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @version 1.0
  */
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 public class PlatformConfigTest {
 
-    @Value("${platform.name}")
-    String platformName;
-
-    @Value("${platform.static.resources.path}")
-    String platformPath;
-
-    @Test
-    public void testPlatform(){
-
-        System.out.println(platformName+platformPath);
-
-    }
+//    @Value("${platform.name}")
+//    String platformName;
+//
+//    @Value("${platform.static.resources.path}")
+//    String platformPath;
+//
+//    @Test
+//    public void testPlatform(){
+//
+//        System.out.println(platformName+platformPath);
+//
+//    }
 
 }

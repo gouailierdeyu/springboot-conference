@@ -1,15 +1,13 @@
 package conference;
 
 import conference.service.MyUserService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
@@ -17,12 +15,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * UTF-8
  * Created by CZY    Time : 2019/7/9 13:03
  */
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 public class Springtest {
 
@@ -36,7 +35,7 @@ public class Springtest {
 	RedisTemplate<String,Object> objectTemplate;
 
 
-    @Before
+    @BeforeEach
     public void willdo(){
         System.out.println("初始化工作");
     }
@@ -49,9 +48,9 @@ public class Springtest {
    		String s2="框架";
 		final  String s3="java";
 		String s4=s2+s3;
+		String s5="java";
 		System.out.println(s1==s4);//false
-
-
+		System.out.println(s5==s3);//true
     }
 
     // StringRedisTemplate 和 RedisTemplate<String,Object> 对同一个key操作时，出现问题？
@@ -116,7 +115,7 @@ public class Springtest {
 	}
 
 
-    @After
+    @AfterEach
     public void release(){
         System.out.println("善后工作");
     }

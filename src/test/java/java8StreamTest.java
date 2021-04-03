@@ -1,6 +1,5 @@
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -13,7 +12,6 @@ import java.util.stream.Stream;
  *
  * @version 1.0
  */
-@RunWith(BlockJUnit4ClassRunner.class)
 public class java8StreamTest {
 
     int cccc=0;

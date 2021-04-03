@@ -1,11 +1,9 @@
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
 
 /**
  * UTF-8
@@ -13,7 +11,6 @@ import static org.junit.Assert.assertEquals;
  *
  * @version 1.0
  */
-@RunWith(BlockJUnit4ClassRunner.class)
 public class java8OptionalTest {
 
     @Test
@@ -22,8 +19,9 @@ public class java8OptionalTest {
         Optional<Integer> num = Optional.of(33);
         //map()是返回调用者类型
         //flatMap（）是参数类型必须和调用者类型相同
-        Assert.assertEquals(Optional.of(66), num.map(i -> i * 2));
-        Assert.assertEquals(Optional.of(66), Optional.of(33).flatMap(i -> Optional.of(i * 2)));
+
+        Assertions.assertEquals(Optional.of(66), num.map(i -> i * 2));
+        Assertions.assertEquals(Optional.of(66), Optional.of(33).flatMap(i -> Optional.of(i * 2)));
     }
 
 }

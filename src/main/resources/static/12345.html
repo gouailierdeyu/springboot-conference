@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/event-source-polyfill/0.0.9/eventsource.min.js"></script>
+</head>
+<body>
+<ul id="list">
+</ul>
+<ul id="list2">
+</ul>
+<script>
+    var source = new EventSource('/kkk');
+    // 建立连接
+    /**
+     * 连接一旦建立，就会触发open事件
+     * 另一种写法：source.onopen = function (event) {}
+     */
+    source.addEventListener('open', function (e) {
+        console.log("676786");
+        // $.get("/event");
+    }, false);
+
+    /**
+     * 客户端收到服务器发来的数据
+     * 另一种写法：source.onmessage = function (event) {}
+     */
+    source.addEventListener('message', function (e) {
+        var item = $("<li></li>").html(e.data);
+        $("#list").append(item);
+    });
+
+
+    /**
+     * 如果发生通信错误（比如连接中断），就会触发error事件
+     * 或者：
+     * 另一种写法：source.onerror = function (event) {}
+     */
+    source.addEventListener('error', function (e) {
+
+    }, false);
+</script>
+</body>
+</html>

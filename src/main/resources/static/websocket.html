@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>websocket</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/event-source-polyfill/0.0.9/eventsource.min.js"></script>
+</head>
+<body>
+<ul id="list">
+</ul>
+<ul id="list2">
+</ul>
+<script>
+    let socket = new WebSocket("wss://localhost/websocket");
+        socket.onerror = err => {
+        console.log(err);
+    };
+        socket.onopen = event => {
+        console.log(event);
+    };
+        socket.onmessage = mess => {
+            var item = $("<li></li>").html(mess.data);
+            $("#list").append(item);
+        console.log(mess.data);
+    };
+        socket.onclose = () => {
+        console.log("连接关闭");
+    };
+
+    function sendMessage() {
+        if (socket.readyState === 1) socket.send("这是一个测试数据");
+        else alert("尚未建立websocket连接");
+    }
+</script>
+</body>
+</html>

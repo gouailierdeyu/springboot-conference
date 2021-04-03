@@ -1,6 +1,3 @@
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,7 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @version 1.0
  */
-//@RunWith(BlockJUnit4ClassRunner.class)
 public class Java8ThreadLocalRandom {
 
     static  ThreadLocalRandom random=ThreadLocalRandom.current();
