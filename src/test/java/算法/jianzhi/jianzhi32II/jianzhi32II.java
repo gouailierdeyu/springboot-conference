@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class jianzhi32II {
     public static void main(String[] args) {
-        Collections.reverse();
+
     }
 }
 class Solution {
